@@ -1,7 +1,7 @@
 package enemys;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controllers.Controller;
+import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
 import views.ImageRender;
@@ -9,27 +9,33 @@ import views.ImageRender;
 import java.awt.*;
 
 /**
- * Created by ADMIN on 5/10/2017.
+ * Created by hieuv on 5/12/2017.
  */
-public class EnemyController extends Controller {
+public class EnemyFlyController extends Controller {
     public boolean moveleftright;
+    private int xenlenystart;
+
+
 
     public   int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
-    public EnemyController (int x, Image image){
-        this.gameRect = new GameRect(x, 416+74+60,image.getWidth(null),image.getHeight(null));
+    public EnemyFlyController(int x, Image image){
+        this.gameRect = new GameRect(x, 150,image.getWidth(null),image.getHeight(null));
+        xenlenystart = x;
+
+
         this.imageRender = new ImageRender(image,gameRect);
 
     }
     public void moveleftringenemy(GameRect gameRect){
-        if (timemove>=100&&timemove<=300){
+        if (timemove>=300&&timemove<=500){
 
             //enemy sang trái hoặc phải
             if (moveleftright){
                 if (gameRect.getX()>=960-imageRender.getImage().getWidth(null)*4){
                     moveBeHavior.movestop(gameRect);
 
-                    timemove=301;
+                    timemove=501;
 
                 }else {
                     moveBeHavior.moveright(gameRect);
@@ -46,7 +52,7 @@ public class EnemyController extends Controller {
                 if (gameRect.getX()<=0){
                     moveBeHavior.movestop(gameRect);
 
-                    timemove=301;
+                    timemove=501;
 
                 }else {
                     moveBeHavior.moveleft(gameRect);
@@ -56,6 +62,9 @@ public class EnemyController extends Controller {
                 }
 
 
+            }
+            if (timemove == 500){
+                xenlenystart = gameRect.getX();
             }
         }
     }
@@ -67,23 +76,27 @@ public class EnemyController extends Controller {
             moveleftright = Util.random.nextBoolean();
         }
 
-            //enemy đi lên
-        if (gameRect.getY()>390){
-            if (timemove>60){
-                moveBeHavior.moveup(gameRect);
-            }
-            if (timemove>100){
-                timemove=0;
-            }
 
-        }
+
 
         moveleftringenemy(gameRect);
+
+        if (moveBeHavior.moveZ(timemove,gameRect,xenlenystart)){
+            imageRender.setImage(imageRender.getImageStart());
+        }else {
+            imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
+        }
+
+//
+
+
+
+
         //timemove từ 0-100 là thời gian ennemy không di chuyển
 
 
         //enemy chạy đc 1 khoảng thời gian thì về stop
-        if (timemove>300) timemove=0;
+        if (timemove>500) timemove=0;
 
 
 

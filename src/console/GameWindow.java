@@ -29,7 +29,7 @@ public class GameWindow extends Frame{
         setVisible(true);
         setSize(960,640);
 
-        bufferedImage = new BufferedImage(960, 640, BufferedImage.TYPE_INT_ARGB);
+        bufferedImage = new BufferedImage(960, 700, BufferedImage.TYPE_INT_ARGB);
         backBufferGraphic = bufferedImage.getGraphics();
 
         addWindowListener(new WindowListener() {
@@ -108,6 +108,7 @@ public class GameWindow extends Frame{
     public void update(Graphics g) {
         currentScene.draw(backBufferGraphic);
         ControllerManager.instance.draw(backBufferGraphic);
+        currentScene.draw(backBufferGraphic);
 
         g.drawImage(bufferedImage, 0,0,960, 640,null);
     }

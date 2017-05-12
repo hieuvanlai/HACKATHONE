@@ -16,6 +16,8 @@ public class PlayerController extends Controller {
     private int dy;
     private boolean isJumped;
     private int gravity = 0;
+    //lấy tọa đọ play để enemysnake đuổi theo;
+    public static  int x ;
 
     private PlayerWeaponController playerWeaponController;
 
@@ -51,6 +53,7 @@ public class PlayerController extends Controller {
     }
 
     public void update() {
+        this.x= gameRect.getX();
         timeCount++;
         this.gameRect.move(dx, dy);
         this.check();
