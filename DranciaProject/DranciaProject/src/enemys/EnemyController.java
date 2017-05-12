@@ -13,13 +13,13 @@ import java.awt.*;
  */
 public class EnemyController extends Controller {
     private boolean moveleftright;
-    private Image ImageStart;
+
     private  int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
     public EnemyController (int x, Image image){
         this.gameRect = new GameRect(x, 416+74);
         this.imageRender = new ImageRender(image);
-        ImageStart = image;
+
     }
 
     @Override
@@ -46,7 +46,7 @@ public class EnemyController extends Controller {
 
                 }else {
                     moveBeHavior.moveright(gameRect);
-                    imageRender.setImage(ImageStart);
+                    imageRender.setImage(imageRender.ImageStart);
 
 
 
@@ -64,7 +64,7 @@ public class EnemyController extends Controller {
                 }else {
                     moveBeHavior.moveleft(gameRect);
 
-                    imageRender.setImage(Util.FlipImage(ImageStart));
+                    imageRender.setImage(Util.FlipImage(imageRender.ImageStart));
 
                 }
 
