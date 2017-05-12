@@ -20,8 +20,8 @@ public class PlayerController extends Controller {
     private PlayerWeaponController playerWeaponController;
 
     public PlayerController(int x, int y, int width, int height, Image image) {
-        this.gameRect = new GameRect(x, y);
-        this.imageRender = new ImageRender(image);
+        this.gameRect = new GameRect(x, y,image.getWidth(null),image.getHeight(null));
+        this.imageRender = new ImageRender(image,gameRect);
         playerWeaponController = new PlayerWeaponController(x + 68, y +30, 45, 25, Util.loadImage("res/weapon01_1.png"));
         ControllerManager.instance.add(playerWeaponController);
     }

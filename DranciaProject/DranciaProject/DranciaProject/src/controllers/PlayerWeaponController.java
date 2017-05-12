@@ -10,8 +10,8 @@ import java.awt.*;
  */
 public class PlayerWeaponController extends Controller{
     public PlayerWeaponController(int x, int y, int width, int height, Image image){
-        this.gameRect = new GameRect(x, y);
-        this.imageRender = new ImageRender(image);
+        this.gameRect = new GameRect(x, y,image.getWidth(null),image.getHeight(null));
+        this.imageRender = new ImageRender(image,gameRect);
     }
 
     @Override

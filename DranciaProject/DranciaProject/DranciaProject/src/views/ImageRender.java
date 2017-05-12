@@ -9,29 +9,26 @@ import java.awt.*;
  */
 public class ImageRender {
     private Image image;
-    public Image ImageStart;
+    private Image ImageStart;
     private GameRect gameRect;
+
+    public Image getImageStart() {
+        return ImageStart;
+    }
+
     //Sửa Lại Ảnh
     public void setImage(Image image) {
         this.image = image;
-
-
-
-    }
-
-    public ImageRender(Image image, GameRect gameRect) {
-        this.image = image;
-        this.gameRect = gameRect;
     }
 
     public Image getImage() {
         return image;
     }
 
-    public ImageRender(Image image){
+    public ImageRender(Image image,GameRect gameRect){
         this.image = image;
-        gameRect.setWidth(image.getWidth(null)*4);
-        gameRect.setHeight(image.getHeight(null)*4);
+        this.ImageStart=image;
+        this.gameRect = gameRect;
     }
 
     public void render(Graphics g, GameRect gameRect){

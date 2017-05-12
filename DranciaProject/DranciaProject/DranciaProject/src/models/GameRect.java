@@ -6,40 +6,35 @@ package models;
 public class GameRect {
     private int x;
     private int y;
-    private int Width;
-    private int Height;
+    private int width;
+    private int height;
 
     public int getWidth() {
-        return Width;
+        return width;
     }
 
     public void setWidth(int width) {
-        Width = width;
+        this.width = width;
     }
 
     public int getHeight() {
-        return Height;
+        return height;
     }
 
     public void setHeight(int height) {
-        Height = height;
-    }
-
-    public GameRect(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        Width = width;
-        Height = height;
+        this.height = height;
     }
 
     private boolean isDead;
     private int HP;
 
-    public GameRect(int x, int y) {
+
+
+    public GameRect(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
-
-
+        this.width = width*4;
+        this.height = height*4;
     }
 
     public void move(int dx, int dy){

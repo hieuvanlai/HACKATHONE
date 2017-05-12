@@ -17,8 +17,8 @@ public class EnemyController extends Controller {
     private  int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
     public EnemyController (int x, Image image){
-        this.gameRect = new GameRect(x, 416+74);
-        this.imageRender = new ImageRender(image);
+        this.gameRect = new GameRect(x, 416+74,image.getWidth(null),image.getHeight(null));
+        this.imageRender = new ImageRender(image,gameRect);
 
     }
 
@@ -46,7 +46,7 @@ public class EnemyController extends Controller {
 
                 }else {
                     moveBeHavior.moveright(gameRect);
-                    imageRender.setImage(imageRender.ImageStart);
+                    imageRender.setImage(imageRender.getImageStart());
 
 
 
@@ -64,7 +64,7 @@ public class EnemyController extends Controller {
                 }else {
                     moveBeHavior.moveleft(gameRect);
 
-                    imageRender.setImage(Util.FlipImage(imageRender.ImageStart));
+                    imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
 
                 }
 
