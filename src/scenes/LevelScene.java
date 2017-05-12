@@ -8,6 +8,7 @@ import utils.Util;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by ADMIN on 5/8/2017.
@@ -27,12 +28,29 @@ public class LevelScene implements GameScene {
 
     private PlayerController playerController;
 
+    ArrayList<Image> imagesEnemy = new ArrayList<>();
+    ArrayList<Image> imagesEnemyFly = new ArrayList<>();
+    ArrayList<Image> imagesEnemySnake = new ArrayList<>();
+
+
+
 
     public LevelScene() {
+        imagesEnemy.add(Util.loadImage("res/enemy01_1.png"));
+        imagesEnemy.add(Util.loadImage("res/enemy01_2.png"));
+        imagesEnemy.add(Util.loadImage("res/enemy01_3.png"));
 
-        EnemyController enemyController = new EnemyController(Util.random.nextInt(600),Util.loadImage("res/enemy01_1.png"));
-        EnemyFlyController enemyController1 = new EnemyFlyController(Util.random.nextInt(600),Util.loadImage("res/enemy-fly04_2.png"));
-        EnemySnakeController enemySnakeController = new EnemySnakeController(Util.random.nextInt(600),Util.loadImage("res/snake1.png"));
+        imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_1.png"));
+        imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_2.png"));
+
+        imagesEnemySnake.add(Util.loadImage("res/snake1.2.png"));
+        imagesEnemySnake.add(Util.loadImage("res/snake1.1.png"));
+
+
+
+        EnemyController enemyController = new EnemyController(Util.random.nextInt(600),imagesEnemy);
+        EnemyFlyController enemyController1 = new EnemyFlyController(Util.random.nextInt(600),imagesEnemyFly);
+        EnemySnakeController enemySnakeController = new EnemySnakeController(Util.random.nextInt(600),imagesEnemySnake);
         ControllerManager.instance.add(enemyController);
         ControllerManager.instance.add(enemyController1);
         ControllerManager.instance.add(enemySnakeController);

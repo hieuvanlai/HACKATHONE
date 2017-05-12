@@ -4,27 +4,34 @@ import controllers.Controller;
 import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
+import views.Animation;
 import views.ImageRender;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by hieuv on 5/12/2017.
  */
 public class EnemyFlyController extends Controller {
     public boolean moveleftright;
+    //toa do enemy ban dau
     private int xenlenystart;
 
 
 
     public   int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
-    public EnemyFlyController(int x, Image image){
-        this.gameRect = new GameRect(x, 150,image.getWidth(null),image.getHeight(null));
+    public EnemyFlyController(int x,  ArrayList<Image> images){
+        this.gameRect = new GameRect(x, 150,images.get(0).getWidth(null),images.get(0).getHeight(null));
         xenlenystart = x;
 
-
-        this.imageRender = new ImageRender(image,gameRect);
+        this.imageRender = new ImageRender(images.get(0),gameRect);
+        this.imagestart = images;
+        animation = new Animation(images,70);
+        for (Image image:images){
+            imagesFlip.add(Util.FlipImage(image));
+        }
 
     }
     public void moveleftringenemy(GameRect gameRect){
@@ -39,7 +46,7 @@ public class EnemyFlyController extends Controller {
 
                 }else {
                     moveBeHavior.moveright(gameRect);
-                    imageRender.setImage(imageRender.getImageStart());
+                    animation.setImages(imagestart);
 
 
 
@@ -57,7 +64,7 @@ public class EnemyFlyController extends Controller {
                 }else {
                     moveBeHavior.moveleft(gameRect);
 
-                    imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
+                    animation.setImages(imagesFlip);
 
                 }
 
@@ -106,6 +113,6 @@ public class EnemyFlyController extends Controller {
     @Override
     public void draw(Graphics g) {
 
-        this.imageRender.render(g, gameRect);
+        animation.draw(g,gameRect);
     }
 }

@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.*;
+
 /**
  * Created by ADMIN on 5/8/2017.
  */
@@ -73,5 +75,11 @@ public class GameRect {
 
     public void setHP(int HP) {
         this.HP = HP;
+    }
+    public boolean intersects(GameRect other){
+        Rectangle rect1 = new Rectangle(x,y,width,height);
+        Rectangle rect2 = new Rectangle(other.x,other.y,other.width,other.height);
+        return rect1.intersects(rect2);
+
     }
 }

@@ -1,38 +1,50 @@
 package enemys;
 
-import controllers.AnimationSnakeController;
 import controllers.Controller;
 import controllers.ControllerManager;
+import controllers.AnimationSnakeControler;
 import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
+import views.Animation;
 import views.ImageRender;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by hieuv on 5/12/2017.
  */
 public class EnemySnakeController extends Controller {
-    public boolean moveleftright;
+
     private int xplanestart;
     private int xenlenystart;
 
 
     public   int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
-    public EnemySnakeController(int x, Image image){
+    public EnemySnakeController(int x,ArrayList<Image> images){
 
-        this.gameRect = new GameRect(x, 385,image.getWidth(null),image.getHeight(null));
-        this.imageRender = new ImageRender(image,gameRect);
-//        AnimationSnakeController  animationSnakeController = new AnimationSnakeController(gameRect);
-//        ControllerManager.instance.add(animationSnakeController);
+        AnimationSnakeControler explosionController = new AnimationSnakeControler(new GameRect(x,426,0,0));
+        ControllerManager.instance.add(explosionController);
+
+
+        this.gameRect = new GameRect(x, 385,images.get(0).getWidth(null),images.get(0).getHeight(null));
+        this.imageRender = new ImageRender(images.get(0),gameRect);
+        animation = new Animation(images,70);
+        imagestart = images;
+        for (Image image:images){
+            imagesFlip.add(Util.FlipImage(image));
+        }
+
+
 
     }
 
 
     @Override
     public void update() {
+        System.out.println(gameRect.getX());
 
         timemove++;
         if (timemove==102){
@@ -51,7 +63,8 @@ public class EnemySnakeController extends Controller {
                     timemove=101;
                 }else {
                     moveBeHavior.moveleft(gameRect);
-                    imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
+
+                    animation.setImages(imagesFlip);
                 }
 
 
@@ -63,11 +76,11 @@ public class EnemySnakeController extends Controller {
                 }
                 else {
                     moveBeHavior.moveright(gameRect);
-                    imageRender.setImage(imageRender.getImageStart());
+                    animation.setImages(imagestart);
                 }
 
             }
-            System.out.println(xenlenystart);
+
         }
         //enemy đi lên
 
@@ -87,7 +100,7 @@ public class EnemySnakeController extends Controller {
     @Override
     public void draw(Graphics g) {
         if (timemove>=100){
-            this.imageRender.render(g, gameRect);
+            animation.draw(g,gameRect);
         }
 
 

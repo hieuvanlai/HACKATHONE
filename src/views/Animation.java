@@ -11,7 +11,7 @@ import java.util.List;
 public class Animation {
     private List<Image> images;
     private  int imageIndex= 0;
-    private int interval=900;
+    private int interval=5;
     private int time;
     private boolean isOneTime;
     private  boolean hasEnded;
@@ -23,6 +23,10 @@ public class Animation {
     public Animation(List<Image> images, int interval) {
         this.images = images;
         this.interval = interval;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public Animation(List<Image> images, int interval, boolean isOneTime) {
@@ -54,7 +58,8 @@ public class Animation {
 
         }
 
-        graphics.drawImage(images.get(imageIndex),gameRect.getX(),gameRect.getY(),null);
+//        graphics.drawImage(images.get(imageIndex),gameRect.getX(),gameRect.getY(),null);
+        graphics.drawImage(images.get(imageIndex), gameRect.getX(), gameRect.getY(), images.get(imageIndex).getWidth(null)*4, images.get(imageIndex).getHeight(null)*4, null);
 
 
     }

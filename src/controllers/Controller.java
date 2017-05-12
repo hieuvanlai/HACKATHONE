@@ -1,18 +1,27 @@
 package controllers;
 
 import models.GameRect;
+import views.Animation;
 import views.ImageRender;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by ADMIN on 5/8/2017.
  */
 public class Controller {
+    public  ArrayList<Image> imagestart = new ArrayList<>();
+    public  ArrayList<Image> imagesFlip = new ArrayList<>();
     protected GameRect gameRect;
     protected ImageRender imageRender;
+    protected Animation animation ;
+    public   int timemove=0;
+    ArrayList<Image> images;
 
     public Controller(){
+
+
 
     }
 
