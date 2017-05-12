@@ -15,7 +15,9 @@ import java.awt.*;
  */
 public class EnemySnakeController extends Controller {
     public boolean moveleftright;
+    private int xplanestart;
     private int xenlenystart;
+
 
     public   int timemove=0;
     MoveBeHavior moveBeHavior = new MoveBeHavior();
@@ -34,13 +36,15 @@ public class EnemySnakeController extends Controller {
 
         timemove++;
         if (timemove==102){
-            xenlenystart=PlayerController.x;
+            xplanestart=PlayerController.x;
+            xenlenystart=gameRect.getX();
+
         }
 
 
 
         if (timemove>100&&timemove<300){
-            if (xenlenystart<480){
+            if (xenlenystart>xplanestart){
                 if (gameRect.getX()<=0){
 
                     xenlenystart=481;

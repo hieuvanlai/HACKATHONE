@@ -52,8 +52,8 @@
       <file leaf-file-name="EnemySnakeController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/enemys/EnemySnakeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+            <state relative-caret-position="272">
+              <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -842,12 +842,12 @@
       <workItem from="1494498628463" duration="2482000" />
       <workItem from="1494508388690" duration="6801000" />
       <workItem from="1494582446935" duration="912000" />
-      <workItem from="1494583913267" duration="20363000" />
+      <workItem from="1494583913267" duration="21084000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76097000" />
+    <option name="totallyTimeSpent" value="76818000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
@@ -1297,8 +1297,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/enemys/EnemySnakeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+        <state relative-caret-position="272">
+          <caret line="46" column="29" lean-forward="false" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
