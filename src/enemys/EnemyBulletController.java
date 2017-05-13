@@ -45,6 +45,7 @@ public class EnemyBulletController extends Controller implements Collider {
                 gameRect.move(3, 0);
             } else if (timeCounter > 150) {
                 this.gameRect.setDead(true);
+                CollisionManager.instance.remove(this);
             }
             if (timeCounter % 20 == 0){
                 w += 5;  // thay đổi width height khi draw

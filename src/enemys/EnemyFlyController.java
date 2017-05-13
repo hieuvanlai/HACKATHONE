@@ -1,7 +1,8 @@
 package enemys;
 
+import controllers.Collider;
+import controllers.CollisionManager;
 import controllers.Controller;
-import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
 import views.Animation;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 /**
  * Created by hieuv on 5/12/2017.
  */
-public class EnemyFlyController extends Controller {
+public class EnemyFlyController extends Controller implements Collider {
     public boolean moveleftright;
     //toa do enemy ban dau
-    private int xenlenystart;
+    private int xEnemystart;
 
 
 
@@ -24,7 +25,7 @@ public class EnemyFlyController extends Controller {
     MoveBeHavior moveBeHavior = new MoveBeHavior();
     public EnemyFlyController(int x,  ArrayList<Image> images){
         this.gameRect = new GameRect(x, 150,images.get(0).getWidth(null),images.get(0).getHeight(null));
-        xenlenystart = x;
+        xEnemystart = x;
 
         this.imageRender = new ImageRender(images.get(0));
         this.imagestart = images;
@@ -32,6 +33,8 @@ public class EnemyFlyController extends Controller {
         for (Image image:images){
             imagesFlip.add(Util.FlipImage(image));
         }
+        CollisionManager.instance.add(this);
+
 
     }
     public void moveleftringenemy(GameRect gameRect){
@@ -71,7 +74,7 @@ public class EnemyFlyController extends Controller {
 
             }
             if (timemove == 500){
-                xenlenystart = gameRect.getX();
+                xEnemystart = gameRect.getX();
             }
         }
     }
@@ -88,7 +91,7 @@ public class EnemyFlyController extends Controller {
 
         moveleftringenemy(gameRect);
 
-        if (moveBeHavior.moveZ(timemove,gameRect,xenlenystart)){
+        if (moveBeHavior.moveZ(timemove,gameRect, xEnemystart)){
             imageRender.setImage(imageRender.getImageStart());
         }else {
             imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
@@ -114,5 +117,10 @@ public class EnemyFlyController extends Controller {
     public void draw(Graphics g) {
 
         animation.draw(g,gameRect);
+    }
+
+    @Override
+    public void onCollider(Collider other) {
+
     }
 }

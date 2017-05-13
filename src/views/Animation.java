@@ -10,7 +10,13 @@ import java.util.List;
  */
 public class Animation {
     private List<Image> images;
+
     private  int imageIndex= 0;
+
+    public int getImageIndex() {
+        return imageIndex;
+    }
+
     private int interval=5;
     private int time;
     private boolean isOneTime;
@@ -23,6 +29,7 @@ public class Animation {
     public Animation(List<Image> images, int interval) {
         this.images = images;
         this.interval = interval;
+
     }
 
     public void setImages(List<Image> images) {

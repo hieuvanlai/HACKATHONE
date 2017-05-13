@@ -99,7 +99,6 @@ public class PlayerController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
-        System.out.println("ja ha ja jaj");
 
         if (other instanceof EnemyController) {
             this.gameRect.getHit(1);

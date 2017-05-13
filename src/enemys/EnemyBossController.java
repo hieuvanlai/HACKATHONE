@@ -8,9 +8,11 @@ import controllers.ControllerManager;
 import levels.Level1;
 import models.GameRect;
 import utils.Util;
+import views.Animation;
 import views.ImageRender;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by ADMIN on 5/12/2017.
@@ -20,9 +22,17 @@ public class EnemyBossController extends Controller implements Collider {
     private int gravity = 1;
     private int dy;
 
-    public EnemyBossController(int x, int y, Image image) {
-        this.gameRect = new GameRect(x, y, image.getWidth(null) , image.getHeight(null));
-        this.imageRender = new ImageRender(image);
+    public EnemyBossController(int x, int y, ArrayList<Image> images) {
+
+
+
+        this.gameRect = new GameRect(x, y,images.get(0).getWidth(null),images.get(0).getHeight(null));
+        this.imageRender = new ImageRender(images.get(0));
+        animation = new Animation(images,50);
+        this.imagestart = images;
+        for (Image image:images){
+            imagesFlip.add(Util.FlipImage(image));
+        }
 
         CollisionManager.instance.add(this);
     }
@@ -35,8 +45,10 @@ public class EnemyBossController extends Controller implements Collider {
             this.dy = gravity = 0;              // khi chạm đất thì dừng lại
             this.gameRect.setY(Level1.GROUND - this.gameRect.getHeight());
         }
+        if (animation.getImageIndex()>6){
+            this.doShoot();        }
 
-        this.doShoot();
+
     }
 
     private void doShoot(){
@@ -55,7 +67,7 @@ public class EnemyBossController extends Controller implements Collider {
 
     @Override
     public void draw(Graphics g) {
-        this.imageRender.render(g, this.gameRect);
+        animation.draw(g,gameRect);
     }
 
     @Override

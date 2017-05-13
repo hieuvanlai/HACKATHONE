@@ -1,9 +1,6 @@
 package enemys;
 
-import controllers.Controller;
-import controllers.ControllerManager;
-import controllers.AnimationSnakeControler;
-import controllers.PlayerController;
+import controllers.*;
 import models.GameRect;
 import utils.Util;
 import views.Animation;
@@ -15,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by hieuv on 5/12/2017.
  */
-public class EnemySnakeController extends Controller {
+public class EnemySnakeController extends Controller implements Collider {
 
     private int xplanestart;
     private int xenlenystart;
@@ -36,7 +33,7 @@ public class EnemySnakeController extends Controller {
         for (Image image:images){
             imagesFlip.add(Util.FlipImage(image));
         }
-
+        CollisionManager.instance.add(this);
 
 
     }
@@ -103,6 +100,11 @@ public class EnemySnakeController extends Controller {
             animation.draw(g,gameRect);
         }
 
+
+    }
+
+    @Override
+    public void onCollider(Collider other) {
 
     }
 }

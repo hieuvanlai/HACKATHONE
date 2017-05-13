@@ -1,5 +1,7 @@
 package enemys;
 
+import controllers.Collider;
+import controllers.CollisionManager;
 import controllers.Controller;
 import models.GameRect;
 import utils.Util;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by ADMIN on 5/10/2017.
  */
-public class EnemyController extends Controller {
+public class EnemyController extends Controller implements Collider {
 
     public boolean moveleftright;
 
@@ -27,6 +29,7 @@ public class EnemyController extends Controller {
         for (Image image:images){
             imagesFlip.add(Util.FlipImage(image));
         }
+        CollisionManager.instance.add(this);
 
     }
     public void moveleftringenemy(GameRect gameRect){
@@ -101,5 +104,10 @@ public class EnemyController extends Controller {
     public void draw(Graphics g) {
 
         animation.draw(g,gameRect);
+    }
+
+    @Override
+    public void onCollider(Collider other) {
+
     }
 }

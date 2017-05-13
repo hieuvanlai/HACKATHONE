@@ -5,7 +5,9 @@ import enemys.EnemyBossController;
 import enemys.EnemyController;
 import enemys.EnemyFlyController;
 import enemys.EnemySnakeController;
+import models.GameRect;
 import utils.Util;
+import views.Animation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,31 +30,56 @@ public class LevelScene implements GameScene {
     private Background bg3;  // scroll cloud
 
     private PlayerController playerController;
+    private Animation animation;
 
     ArrayList<Image> imagesEnemy = new ArrayList<>();
     ArrayList<Image> imagesEnemyFly = new ArrayList<>();
     ArrayList<Image> imagesEnemySnake = new ArrayList<>();
+    ArrayList<Image> imageseign = new ArrayList<>();
+    ArrayList<Image> imageboss = new ArrayList<>();
 
 
 
 
     public LevelScene() {
+        imageboss.add(Util.loadImage("res/enemyBoss01_1.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_2.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_3.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_4.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_5.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_6.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_7.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_8.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_9.png"));
+        imageboss.add(Util.loadImage("res/enemyBoss01_10.png"));
+
+
         imagesEnemy.add(Util.loadImage("res/enemy01_1.png"));
         imagesEnemy.add(Util.loadImage("res/enemy01_2.png"));
         imagesEnemy.add(Util.loadImage("res/enemy01_3.png"));
 
+
+
         imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_1.png"));
         imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_2.png"));
 
+        imageseign.add(Util.loadImage("res/map01_ensign1.png"));
+        imageseign.add(Util.loadImage("res/map01_ensign2.png"));
+        imageseign.add(Util.loadImage("res/map01_ensign3.png"));
+
         imagesEnemySnake.add(Util.loadImage("res/snake1.2.png"));
         imagesEnemySnake.add(Util.loadImage("res/snake1.1.png"));
+        animation = new Animation(imageseign,20);
 
 
 
         EnemyController enemyController = new EnemyController(Util.random.nextInt(600),imagesEnemy);
         EnemyFlyController enemyController1 = new EnemyFlyController(Util.random.nextInt(600),imagesEnemyFly);
         EnemySnakeController enemySnakeController = new EnemySnakeController(Util.random.nextInt(600),imagesEnemySnake);
-        EnemyBossController enemyBossController = new EnemyBossController(20, 0, Util.loadImage("res/enemyBoss01_9.png"));
+
+
+        EnemyBossController enemyBossController = new EnemyBossController(20, 0, imageboss);
+
 
         ControllerManager.instance.add(enemyController);
         ControllerManager.instance.add(enemyController1);
@@ -76,6 +103,7 @@ public class LevelScene implements GameScene {
 
     @Override
     public void update() {
+
         bg1.update();
         bg2.update();
         bg3.update();
@@ -92,12 +120,15 @@ public class LevelScene implements GameScene {
         g.drawImage(background, 0, 0, 960, 550, null);
 
 
-        g.drawImage(bgCloud1, bg1.getBgX(), bg1.getBgY(), 252, 39, null);
-        g.drawImage(bgCloud2, bg2.getBgX(), bg2.getBgY(), 252, 39, null);
-        g.drawImage(bgCloud3, bg3.getBgX(), bg3.getBgY(), 252, 39, null);
-
+        g.drawImage(bgCloud1, bg1.getBgX(), bg1.getBgY(), 252, 39+20, null);
+        g.drawImage(bgCloud2, bg2.getBgX(), bg2.getBgY(), 252, 39+20, null);
+        g.drawImage(bgCloud3, bg3.getBgX(), bg3.getBgY(), 252, 39+20, null);
+        animation.draw(g, new GameRect(210,156,imageseign.get(0).getWidth(null),imageseign.get(0).getWidth(null)));
+        animation.draw(g, new GameRect(60,156,imageseign.get(0).getWidth(null),imageseign.get(0).getWidth(null)));
         ControllerManager.instance.draw(g);
         g.drawImage(bgStatus, 0, 550, 960, 140, null);
+
+
     }
 
     @Override
