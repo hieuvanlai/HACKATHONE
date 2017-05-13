@@ -1,6 +1,5 @@
 package enemys;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controllers.Controller;
 import models.GameRect;
 import utils.Util;
@@ -22,7 +21,7 @@ public class EnemyController extends Controller {
     MoveBeHavior moveBeHavior = new MoveBeHavior();
     public EnemyController (int x, ArrayList<Image> images){
         this.gameRect = new GameRect(x, 416+74+60,images.get(0).getWidth(null),images.get(0).getHeight(null));
-        this.imageRender = new ImageRender(images.get(0),gameRect);
+        this.imageRender = new ImageRender(images.get(0));
         animation = new Animation(images,70);
         this.imagestart = images;
         for (Image image:images){

@@ -10,7 +10,9 @@ import java.awt.*;
 public class ImageRender {
     private Image image;
     private Image ImageStart;
-    private GameRect gameRect;
+
+
+
 
     public Image getImageStart() {
         return ImageStart;
@@ -25,10 +27,10 @@ public class ImageRender {
         return image;
     }
 
-    public ImageRender(Image image,GameRect gameRect){
+    public ImageRender(Image image){
         this.image = image;
         this.ImageStart=image;
-        this.gameRect = gameRect;
+
     }
 
     public void render(Graphics g, GameRect gameRect){

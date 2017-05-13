@@ -1,4 +1,4 @@
-package console;
+package controllers;
 
 import models.GameRect;
 

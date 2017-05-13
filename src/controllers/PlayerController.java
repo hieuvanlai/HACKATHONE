@@ -1,82 +1,120 @@
 package controllers;
 
+import enemys.EnemyBulletController;
+import enemys.EnemyController;
+import levels.Level1;
 import models.GameRect;
 import utils.Util;
 import views.ImageRender;
 
 import java.awt.*;
+import  controllers.CollisionManager;
 
 /**
  * Created by ADMIN on 5/8/2017.
  */
-public class PlayerController extends Controller {
+public class PlayerController extends Controller implements Collider {
     private int timeCount = 0;
     private int speed = 2;
+    private int maxHeightJump = 194;
     private int dx;
     private int dy;
     private boolean isJumped;
-    private int gravity = 0;
-    //lấy tọa đọ play để enemysnake đuổi theo;
-    public static  int x ;
+    private boolean isMoveLeft = false; // weapon di chuyển theo hướng player
+    private boolean isMoveRight = true;
+    private int gravity = 3; //  trọng lượng
+    public static int  x;
 
     private PlayerWeaponController playerWeaponController;
 
-    public PlayerController(int x, int y, int width, int height, Image image) {
-        this.gameRect = new GameRect(x, y,image.getWidth(null),image.getHeight(null));
-        this.imageRender = new ImageRender(image,gameRect);
-        playerWeaponController = new PlayerWeaponController(x + 68, y +30, 45, 25, Util.loadImage("res/weapon01_1.png"));
-        ControllerManager.instance.add(playerWeaponController);
+    public PlayerController(int x, int y, Image image) {
+        this.gameRect = new GameRect(x, y, image.getWidth(null), image.getHeight(null));
+        this.imageRender = new ImageRender(image);
+        this.gameRect.setHP(200);
+        playerWeaponController = new PlayerWeaponController(x + 68, y + 36, 45, 25, Util.loadImage("res/weapon01_1.png"));
+
+        // ControllerManager.instance.add(playerWeaponController);
+        CollisionManager.instance.add(this);
     }
 
     public void processInput(boolean isUpPressed, boolean isDownPressed, boolean isLeftPressed, boolean isRightPressed) {
+
         if (isUpPressed) {
             if (!isJumped) {
-                this.dy = -3;
+                this.dy = -5;
                 this.isJumped = true;
             }
         }
         if (isDownPressed) {
             if (isJumped) {
-                this.dy = 6;
+                this.dy = 10;
             }
         }
         if (isLeftPressed) {
-            if (this.gameRect.getX()+speed >= 0) {
+            if (this.gameRect.getX() + speed >= 0) {
                 this.dx = -this.speed;
+                isMoveLeft = true;
+                isMoveRight = false;
             } else this.dx = 0;
+            this.imageRender.setImage(Util.FlipImage(this.imageRender.getImageStart()));
         }
         if (isRightPressed) {
-            if (this.gameRect.getX()+speed < 890) {
+            if (this.gameRect.getX() + speed < 890) {
                 this.dx = this.speed;
+                isMoveLeft = false;
+                isMoveRight = true;
             } else this.dx = 0;
+            this.imageRender.setImage(this.imageRender.getImageStart());
         }
     }
 
     public void update() {
-        this.x= gameRect.getX();
+        this.x =  gameRect.getX();
         timeCount++;
         this.gameRect.move(dx, dy);
         this.check();
-        playerWeaponController.moveWeapon(this.gameRect.getX(), this.gameRect.getY()); //di chuyen weapon theo player
+        playerWeaponController.moveWeapon(this.gameRect.getX(), this.gameRect.getY(), isMoveLeft, isMoveRight); //di chuyen weapon theo player
     }
 
     private void check() {
-        if (this.getGameRect().getY() >= 382) {//khi player chạm đất
-            this.getGameRect().setY(382
-            );
+        if (this.getGameRect().getY() >= Level1.GROUND - this.gameRect.getHeight()) {//khi player chạm đất
+            this.getGameRect().setY(Level1.GROUND - this.gameRect.getHeight());
             this.isJumped = false;
         }
 
-        if (this.isJumped && this.getGameRect().getY() <= 128) {
-            this.dy = 3;                      // nhảy xong thì rơi xuống
+        if (this.isJumped && this.getGameRect().getY() <= this.maxHeightJump) {
+            this.dy = (dy + gravity);
+            gameRect.move(0, dy);                      // nhảy xong thì rơi xuống
         }
 
-        if (this.gameRect.getX()+speed <= 0 || this.gameRect.getX()+speed >= 890) {
+        if (this.gameRect.getX() + speed <= 0 || this.gameRect.getX() + speed >= 890) {
             this.dx = 0;                       // nếu va vào w h của màn hình thì dừng lại
         }
     }
 
     public void draw(Graphics g) {
         imageRender.render(g, this.gameRect);
+        playerWeaponController.imageRender.render(g, playerWeaponController.gameRect);
+    }
+
+    @Override
+    public void onCollider(Collider other) {
+        System.out.println("ja ha ja jaj");
+
+        if (other instanceof EnemyController) {
+            this.gameRect.getHit(1);
+            if (this.gameRect.isDead()) {
+                CollisionManager.instance.remove(this);
+                CollisionManager.instance.remove(playerWeaponController);
+            }
+
+        } else if (other instanceof EnemyBulletController) {
+            this.gameRect.getHit(1);
+            if (this.getGameRect().isDead()) {
+                CollisionManager.instance.remove(this);
+                CollisionManager.instance.remove(playerWeaponController);
+
+            }
+        }
     }
 }

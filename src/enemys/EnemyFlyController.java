@@ -26,7 +26,7 @@ public class EnemyFlyController extends Controller {
         this.gameRect = new GameRect(x, 150,images.get(0).getWidth(null),images.get(0).getHeight(null));
         xenlenystart = x;
 
-        this.imageRender = new ImageRender(images.get(0),gameRect);
+        this.imageRender = new ImageRender(images.get(0));
         this.imagestart = images;
         animation = new Animation(images,70);
         for (Image image:images){

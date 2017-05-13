@@ -31,15 +31,14 @@ public class GameRect {
     private int HP;
 
 
-
     public GameRect(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
-        this.width = width*4;
-        this.height = height*4;
+        this.width = width * 4;
+        this.height = height * 4;
     }
 
-    public void move(int dx, int dy){
+    public void move(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
@@ -76,10 +75,18 @@ public class GameRect {
     public void setHP(int HP) {
         this.HP = HP;
     }
-    public boolean intersects(GameRect other){
-        Rectangle rect1 = new Rectangle(x,y,width,height);
-        Rectangle rect2 = new Rectangle(other.x,other.y,other.width,other.height);
-        return rect1.intersects(rect2);
 
+    public boolean intersects(GameRect other) {
+        Rectangle rect1 = new Rectangle(x, y, width, height);
+        Rectangle rect2 = new Rectangle(other.x, other.y, other.width, other.height);
+        return rect1.intersects(rect2);
+    }
+
+    public void getHit(int damage) {
+        System.out.println(String.format("HP player: %s", this.getHP()));
+        this.setHP(this.getHP() - 1);
+        if (this.getHP() == 0) {
+            this.setDead(true);
+        }
     }
 }

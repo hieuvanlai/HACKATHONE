@@ -1,6 +1,7 @@
 package scenes;
 
 import controllers.*;
+import enemys.EnemyBossController;
 import enemys.EnemyController;
 import enemys.EnemyFlyController;
 import enemys.EnemySnakeController;
@@ -51,9 +52,12 @@ public class LevelScene implements GameScene {
         EnemyController enemyController = new EnemyController(Util.random.nextInt(600),imagesEnemy);
         EnemyFlyController enemyController1 = new EnemyFlyController(Util.random.nextInt(600),imagesEnemyFly);
         EnemySnakeController enemySnakeController = new EnemySnakeController(Util.random.nextInt(600),imagesEnemySnake);
+        EnemyBossController enemyBossController = new EnemyBossController(20, 0, Util.loadImage("res/enemyBoss01_9.png"));
+
         ControllerManager.instance.add(enemyController);
         ControllerManager.instance.add(enemyController1);
         ControllerManager.instance.add(enemySnakeController);
+        ControllerManager.instance.add(enemyBossController);
         background = Util.loadImage("res/map01_2.png");
 
         bgCloud1 = Util.loadImage("res/map01_cloud.png");
@@ -66,7 +70,7 @@ public class LevelScene implements GameScene {
         bg3 = new Background(1760, 50);
 
 
-        playerController = new PlayerController(840, 382, 68, 64, Util.loadImage("res/player01_1.png"));
+        playerController = new PlayerController(840, 382, Util.loadImage("res/player01_1.png"));
         ControllerManager.instance.add(playerController);
     }
 
@@ -77,6 +81,8 @@ public class LevelScene implements GameScene {
         bg3.update();
         ControllerManager.instance.update();
         playerController.processInput(InputManager.istance.isUpPressed(), InputManager.istance.isDownPressed(), InputManager.istance.isLeftPressed(), InputManager.istance.isRightPressed());
+
+        CollisionManager.instance.update();
 
 
     }

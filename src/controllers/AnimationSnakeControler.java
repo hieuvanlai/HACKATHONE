@@ -1,7 +1,6 @@
 package controllers;
 
 import views.Animation;
-import console.Collider;
 import models.GameRect;
 import utils.Util;
 

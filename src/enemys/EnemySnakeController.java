@@ -30,7 +30,7 @@ public class EnemySnakeController extends Controller {
 
 
         this.gameRect = new GameRect(x, 385,images.get(0).getWidth(null),images.get(0).getHeight(null));
-        this.imageRender = new ImageRender(images.get(0),gameRect);
+        this.imageRender = new ImageRender(images.get(0));
         animation = new Animation(images,70);
         imagestart = images;
         for (Image image:images){
@@ -44,7 +44,7 @@ public class EnemySnakeController extends Controller {
 
     @Override
     public void update() {
-        System.out.println(gameRect.getX());
+
 
         timemove++;
         if (timemove==102){
