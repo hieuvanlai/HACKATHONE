@@ -3,6 +3,7 @@ package controllers;
 import enemys.EnemyController;
 import enemys.EnemyFlyController;
 import enemys.EnemySnakeController;
+import enemys.Gold;
 import models.GameRect;
 import utils.Util;
 import views.ImageRender;
@@ -36,26 +37,32 @@ public class PlayerWeaponController extends Controller implements Collider{
             this.gameRect.setY(y + 36);
             this.imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
         }
-        System.out.println(this.gameRect.getY());
+
     }
 
     @Override
     public void onCollider(Collider other) {
         if (other instanceof EnemyController) {
+            GameRect gameRectg = new GameRect(((EnemyController) other).gameRect.getX(),gameRect.getY(),10,10);
+            Gold gold = new Gold(gameRectg,new ImageRender(Util.loadImage("res/coin01.png")));
+            ControllerManager.instance.add(gold);
             ((EnemyController) other).gameRect.setDead(true);
+            Util.playSound("res/gietenemy.wav",false);
             CollisionManager.instance.remove(other);
-            System.out.println("chet");
+
             }
         if(other instanceof EnemySnakeController)
 
         {
             ((EnemySnakeController) other).gameRect.setDead(true);
+            Util.playSound("res/gietenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
         if(other instanceof EnemyFlyController)
 
         {
             ((EnemyFlyController) other).gameRect.setDead(true);
+            Util.playSound("res/gietenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
 

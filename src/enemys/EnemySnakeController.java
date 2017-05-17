@@ -16,6 +16,10 @@ public class EnemySnakeController extends Controller implements Collider {
 
     private int xplanestart;
     private int xenlenystart;
+    private int dame =1;
+    private int dameLimit=0;
+    private int dameLimitLater=0;
+    private int damecount=0;
 
 
     public   int timemove=0;
@@ -41,6 +45,17 @@ public class EnemySnakeController extends Controller implements Collider {
 
     @Override
     public void update() {
+        //nếu không va chạm nữa thì về 0
+        if (dameLimitLater>dameLimit){
+            dameLimitLater=0;
+            dameLimit=0;
+            damecount=0;
+        }
+        //tăng  damlimitlate để kiểm tra xem có phải va chạm liên tục hay không
+        if (dameLimitLater>0){
+            dameLimitLater++;
+        }
+
 
 
         timemove++;
@@ -105,6 +120,38 @@ public class EnemySnakeController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
+        //sau khi hết hiệu ứng thì mới cho xét va chạm
+        if (timemove>100){
+            if(other instanceof PlayerController){
+                dameLimit++;
+                //cắn máu phát đầu tiên
+                if (dameLimit==1){
+                    other.getGameRect().getHit(dame);
+
+                    dameLimitLater=dameLimit;
+                    Util.playSound("res/enemycan.wav",false);
+                }
+                //nếu va chạm liên tục thì giới hạn lại
+                if (dameLimit==dameLimitLater){
+
+                    if (gameRect.getX()>=960-40){
+                        gameRect.move(-1,0);
+                    }
+                    if (xenlenystart>xplanestart){
+                        gameRect.move(1,0);
+                    }
+                    damecount++;
+                    if (damecount==20){
+                        Util.playSound("res/enemycan.wav",false);
+                        other.getGameRect().getHit(dame);
+                        damecount=0;
+                    }
+
+                }
+
+            }
+        }
+
 
     }
 }

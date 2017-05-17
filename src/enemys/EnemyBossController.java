@@ -19,34 +19,100 @@ import java.util.ArrayList;
  */
 public class EnemyBossController extends Controller implements Collider {
     private int timeCounter = 20;
+    private int timeTornado = 70;
+    public static int hp=200;
+    //kien tra thoi gian ra skill
+    private int timeShot = 0;
     private int gravity = 1;
     private int dy;
+    private ArrayList<Image> imageTornado = new ArrayList<>();
+    private ArrayList<Image> imageShot= new ArrayList<>();
+    //đầu rồng
+    private EnemyHpBossController enemyHpBossControllerHit;
+    //Bụng Rồng
+    private EnemyHpBossController enemyHpBossControllerDame;
+
+
+
 
     public EnemyBossController(int x, int y, ArrayList<Image> images) {
 
 
-
         this.gameRect = new GameRect(x, y,images.get(0).getWidth(null),images.get(0).getHeight(null));
+        this.gameRect.setHP(160);
         this.imageRender = new ImageRender(images.get(0));
-        animation = new Animation(images,50);
-        this.imagestart = images;
+        animation = new Animation(images,15);
+        imageTornado.add(images.get(8));
+        imageTornado.add(images.get(9));
+
+        imageShot.add(images.get(0));
+        imageShot.add(images.get(1));
+        imageShot.add(images.get(2));
+        imageShot.add(images.get(3));
+        imageShot.add(images.get(4));
+        imageShot.add(images.get(5));
+        imageShot.add(images.get(6));
+        imageShot.add(images.get(7));
+
+
+
         for (Image image:images){
             imagesFlip.add(Util.FlipImage(image));
         }
-
+        Util.playSound("res/rongxuathien.wav",false);
         CollisionManager.instance.add(this);
+
+        enemyHpBossControllerHit = new EnemyHpBossController(new GameRect(190,275,10,10));
+
+        enemyHpBossControllerDame = new EnemyHpBossController(new GameRect(190,275+30+60+60-20-10,10,10));
+        enemyHpBossControllerDame.dame=true;
+
+
+
     }
 
     @Override
     public void update() {
+
+        this.hp = gameRect.getHP();
+        timeShot++;
         dy += gravity;
         this.gameRect.move(0, dy);
         if (this.gameRect.getY() >= Level1.GROUND + this.gameRect.getHeight()) {
             this.dy = gravity = 0;              // khi chạm đất thì dừng lại
             this.gameRect.setY(Level1.GROUND - this.gameRect.getHeight());
         }
-        if (animation.getImageIndex()>6){
-            this.doShoot();        }
+
+
+        if (timeShot>0&&timeShot<300){
+            animation.setImageIndex(0);
+        }//
+
+        if (timeShot>301&&timeShot<700){
+            animation.setImages(imageShot);
+            doShoot();
+
+
+        }
+        if (timeShot>701&&timeShot<1000){
+            animation.setImageIndex(0);
+        }
+        if (timeShot>1001&&timeShot<1300){
+            animation.setImages(imageTornado);
+                doShootTornado();
+
+        }
+        if (timeShot>1301){
+            timeShot=0;
+        }
+
+
+
+
+
+
+
+
 
 
     }
@@ -54,6 +120,7 @@ public class EnemyBossController extends Controller implements Collider {
     private void doShoot(){
         timeCounter--;
         if (timeCounter <= 0){
+            Util.playSound("res/rongthoilua.wav",false);
             EnemyBulletController enemyBulletController = new EnemyBulletController(
                     this.gameRect.getX()+ this.gameRect.getWidth(),
                     this.gameRect.getY()+30,
@@ -61,13 +128,24 @@ public class EnemyBossController extends Controller implements Collider {
 
             ControllerManager.instance.add(enemyBulletController);
             enemyBulletController.setShoot(true);
-            timeCounter = 20;
+            timeCounter = 40;
+        }
+    }
+    private void doShootTornado(){
+        timeTornado--;
+        if (timeTornado <= 0){
+            Util.playSound("res/rongthoiloc.wav",false);
+            EnemyBulletTornadoController enemyBulletTornadoController = new EnemyBulletTornadoController(this.gameRect.getX()+ this.gameRect.getWidth(),this.gameRect.getY()+100, Util.loadImage("res/enemyBoss01-Skill02_1.png"));
+            ControllerManager.instance.add(enemyBulletTornadoController);
+
+            timeTornado = 100;
         }
     }
 
     @Override
     public void draw(Graphics g) {
         animation.draw(g,gameRect);
+
     }
 
     @Override

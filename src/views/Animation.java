@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by hieuv on 5/7/2017.
- */
+ */;
 public class Animation {
     private List<Image> images;
 
@@ -34,12 +34,18 @@ public class Animation {
 
     public void setImages(List<Image> images) {
         this.images = images;
+
     }
 
     public Animation(List<Image> images, int interval, boolean isOneTime) {
         this.images = images;
         this.interval = interval;
         this.isOneTime = isOneTime;
+    }
+
+    public void setImageIndex(int imageIndex) {
+        this.imageIndex = imageIndex;
+        this.time=0;
     }
 
     public Animation(List<Image> images, boolean isOneTime) {
@@ -64,6 +70,7 @@ public class Animation {
             }
 
         }
+
 
 //        graphics.drawImage(images.get(imageIndex),gameRect.getX(),gameRect.getY(),null);
         graphics.drawImage(images.get(imageIndex), gameRect.getX(), gameRect.getY(), images.get(imageIndex).getWidth(null)*4, images.get(imageIndex).getHeight(null)*4, null);

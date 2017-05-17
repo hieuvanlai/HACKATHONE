@@ -38,6 +38,13 @@ public class GameRect {
         this.height = height * 4;
     }
 
+    public GameRect(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.width = width * 4;
+        this.height = height * 4;
+    }
+
     public void move(int dx, int dy) {
         this.x += dx;
         this.y += dy;
@@ -83,8 +90,8 @@ public class GameRect {
     }
 
     public void getHit(int damage) {
-        System.out.println(String.format("HP player: %s", this.getHP()));
-        this.setHP(this.getHP() - 1);
+
+        this.setHP(this.getHP() - damage);
         if (this.getHP() == 0) {
             this.setDead(true);
         }

@@ -1,7 +1,7 @@
 package controllers;
 
-import enemys.EnemyBulletController;
-import enemys.EnemyController;
+import com.sun.org.apache.xpath.internal.SourceTree;
+import enemys.*;
 import levels.Level1;
 import models.GameRect;
 import utils.Util;
@@ -24,18 +24,22 @@ public class PlayerController extends Controller implements Collider {
     private boolean isMoveRight = true;
     private int gravity = 3; //  trọng lượng
     public static int  x;
+    public static int hp=200;
+
+
 
     private PlayerWeaponController playerWeaponController;
 
     public PlayerController(int x, int y, Image image) {
         this.gameRect = new GameRect(x, y, image.getWidth(null), image.getHeight(null));
         this.imageRender = new ImageRender(image);
-        this.gameRect.setHP(200);
+        this.gameRect.setHP(160);
         playerWeaponController = new PlayerWeaponController(x + 68, y + 36, 45, 25, Util.loadImage("res/weapon01_1.png"));
 
         // ControllerManager.instance.add(playerWeaponController);
         CollisionManager.instance.add(this);
     }
+
 
     public void processInput(boolean isUpPressed, boolean isDownPressed, boolean isLeftPressed, boolean isRightPressed) {
 
@@ -69,7 +73,16 @@ public class PlayerController extends Controller implements Collider {
     }
 
     public void update() {
+        if (getGameRect().getHP()<2){
+            imageRender.setImage(Util.loadImage("res/player_dead.png"));
+
+
+        }
+
+
+
         this.x =  gameRect.getX();
+        this.hp= gameRect.getHP();
         timeCount++;
         this.gameRect.move(dx, dy);
         this.check();
@@ -99,21 +112,10 @@ public class PlayerController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
-
-        if (other instanceof EnemyController) {
-            this.gameRect.getHit(1);
-            if (this.gameRect.isDead()) {
-                CollisionManager.instance.remove(this);
-                CollisionManager.instance.remove(playerWeaponController);
-            }
-
-        } else if (other instanceof EnemyBulletController) {
-            this.gameRect.getHit(1);
-            if (this.getGameRect().isDead()) {
-                CollisionManager.instance.remove(this);
-                CollisionManager.instance.remove(playerWeaponController);
-
-            }
+        if (other instanceof Gold){
+            ((Gold) other).gameRect.setDead(true);
+            CollisionManager.instance.remove(other);
         }
+
     }
 }

@@ -2,6 +2,7 @@ package controllers;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by ADMIN on 5/8/2017.
@@ -30,12 +31,22 @@ public class ControllerManager {
     }
 
     public void draw(Graphics g) {
-//        for (Controller controller : controllers) {
-//            controller.draw(g);
-//        }
 
-        for (int i = 0; i < controllers.size(); i++){
-            controllers.get(i).draw(g);
+        boolean x=true;
+        while (x){
+            try {
+                for (int i = 0; i < controllers.size(); i++){
+                    controllers.get(i).draw(g);
+                }
+                x=false;
+            }catch (Exception e){
+                x=true;
+
+            }
+
         }
+
+
+
     }
 }

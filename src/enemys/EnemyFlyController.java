@@ -3,6 +3,7 @@ package enemys;
 import controllers.Collider;
 import controllers.CollisionManager;
 import controllers.Controller;
+import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
 import views.Animation;
@@ -18,6 +19,10 @@ public class EnemyFlyController extends Controller implements Collider {
     public boolean moveleftright;
     //toa do enemy ban dau
     private int xEnemystart;
+    private int dameLimit=0;
+    private int dameLimitLater=0;
+    private int damecount=0;
+    private int dame=2;
 
 
 
@@ -81,6 +86,17 @@ public class EnemyFlyController extends Controller implements Collider {
 
     @Override
     public void update() {
+        //nếu không va chạm nữa thì về 0
+        if (dameLimitLater>dameLimit){
+            dameLimitLater=0;
+            dameLimit=0;
+            damecount=0;
+        }
+        //tăng  damlimitlate để kiểm tra xem có phải va chạm liên tục hay không
+        if (dameLimitLater>0){
+            dameLimitLater++;
+        }
+
         timemove++;
         if (timemove==1){
             moveleftright = Util.random.nextBoolean();
@@ -121,6 +137,30 @@ public class EnemyFlyController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
+        if (other instanceof PlayerController) {
+            dameLimit++;
+            //cắn máu phát đầu tiên
+            if (dameLimit==1){
+                other.getGameRect().getHit(dame);
+
+                dameLimitLater=dameLimit;
+                Util.playSound("res/enemycan.wav",false);
+            }
+            //nếu va chạm liên tục thì giới hạn lại
+            if (dameLimit==dameLimitLater){
+
+
+
+                damecount++;
+                if (damecount==20){
+                    Util.playSound("res/enemycan.wav",false);
+                    other.getGameRect().getHit(dame);
+                    damecount=0;
+                }
+
+            }
+
+        }
 
     }
 }

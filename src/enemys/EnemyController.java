@@ -3,6 +3,7 @@ package enemys;
 import controllers.Collider;
 import controllers.CollisionManager;
 import controllers.Controller;
+import controllers.PlayerController;
 import models.GameRect;
 import utils.Util;
 import views.Animation;
@@ -17,6 +18,10 @@ import java.util.ArrayList;
 public class EnemyController extends Controller implements Collider {
 
     public boolean moveleftright;
+    private int dame =1;
+    private int dameLimit=0;
+    private int dameLimitLater=0;
+    private int damecount=0;
 
 
 
@@ -38,17 +43,13 @@ public class EnemyController extends Controller implements Collider {
             //enemy sang trái hoặc phải
             if (moveleftright){
                 if (gameRect.getX()>=960-imageRender.getImage().getWidth(null)*4){
-                    moveBeHavior.movestop(gameRect);
+
 
                     timemove=301;
 
                 }else {
                     moveBeHavior.moveright(gameRect);
                     animation.setImages(imagestart);
-
-
-
-
 
 
                 }
@@ -72,7 +73,18 @@ public class EnemyController extends Controller implements Collider {
 
     @Override
     public void update() {
+        //nếu không va chạm nữa thì về 0
+        if (dameLimitLater>dameLimit){
+            dameLimitLater=0;
+            dameLimit=0;
+            damecount=0;
+        }
+        //tăng  damlimitlate để kiểm tra xem có phải va chạm liên tục hay không
+        if (dameLimitLater>0){
+            dameLimitLater++;
+        }
         timemove++;
+
         if (timemove==1){
             moveleftright = Util.random.nextBoolean();
         }
@@ -108,6 +120,33 @@ public class EnemyController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
+
+        if(other instanceof PlayerController){
+                dameLimit++;
+                //cắn máu phát đầu tiên
+                if (dameLimit==1){
+                    other.getGameRect().getHit(dame);
+
+                    dameLimitLater=dameLimit;
+                    Util.playSound("res/enemycan.wav",false);
+                }
+                //nếu va chạm liên tục thì giới hạn lại
+                if (dameLimit==dameLimitLater){
+                    if (moveleftright){
+                        gameRect.move(-1,0);
+                    }else{
+                        gameRect.move(1,0);
+                    }
+                    damecount++;
+                    if (damecount==20){
+                        Util.playSound("res/enemycan.wav",false);
+                        other.getGameRect().getHit(dame);
+                        damecount=0;
+                    }
+
+                }
+
+        }
 
     }
 }

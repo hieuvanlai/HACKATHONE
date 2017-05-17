@@ -27,9 +27,9 @@ public class GameWindow extends Frame{
 
         setTitle("Drancia Project by CamBuoiTaoTeam");
         setVisible(true);
-        setSize(960,640);
+        setSize(960,640+52+10+10+10-2);
 
-        bufferedImage = new BufferedImage(960, 700, BufferedImage.TYPE_INT_ARGB);
+        bufferedImage = new BufferedImage(960, 700+20+20, BufferedImage.TYPE_INT_ARGB);
         backBufferGraphic = bufferedImage.getGraphics();
 
         addWindowListener(new WindowListener() {
@@ -97,7 +97,14 @@ public class GameWindow extends Frame{
                         e.printStackTrace();
                     }
                     currentScene.update();
-                    ControllerManager.instance.update();
+                    if (LevelScene.gameover){
+
+                    }else {
+                        ControllerManager.instance.update();
+                    }
+
+
+
                 }
             }
         });
@@ -110,7 +117,7 @@ public class GameWindow extends Frame{
         ControllerManager.instance.draw(backBufferGraphic);
         currentScene.draw(backBufferGraphic);
 
-        g.drawImage(bufferedImage, 0,0,960, 640,null);
+        g.drawImage(bufferedImage, 0,0,960, 640+52+10+10,null);
     }
 
     public void setCurrentScene(GameScene currentScene) {
