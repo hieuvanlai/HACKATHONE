@@ -28,9 +28,9 @@ public class EnemyBossController extends Controller implements Collider {
     private ArrayList<Image> imageTornado = new ArrayList<>();
     private ArrayList<Image> imageShot= new ArrayList<>();
     //đầu rồng
-    private EnemyHpBossController enemyHpBossControllerHit;
+    public EnemyHpBossController enemyHpBossControllerHit;
     //Bụng Rồng
-    private EnemyHpBossController enemyHpBossControllerDame;
+    public EnemyHpBossController enemyHpBossControllerDame;
 
 
 

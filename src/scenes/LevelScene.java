@@ -25,7 +25,7 @@ public class LevelScene implements GameScene {
     private int quantityEnemy=0;
     private int quantityEnemyFly=0;
     private int quantityEnemySnake=0;
-    public static boolean gameover;
+    public static boolean gameover=false;
     public static  EnemyBossController enemyBossController;
 
     private IconController  iconBossController;
@@ -42,6 +42,19 @@ public class LevelScene implements GameScene {
     private Image bgCloud2;
     private Image bgCloud3;
     private Image bgStatus;
+
+    private Image goldCount=Util.loadImage("res/Untitled-129.png");
+    private Image gold0=Util.loadImage("res/Untitled-130.png");
+    private Image gold1=Util.loadImage("res/Untitled-131.png");
+    private Image gold2=Util.loadImage("res/Untitled-132.png");
+    private Image gold3=Util.loadImage("res/Untitled-133.png");
+    private Image gold4=Util.loadImage("res/Untitled-134.png");
+    private Image gold5=Util.loadImage("res/Untitled-135.png");
+    private Image gold6=Util.loadImage("res/Untitled-136.png");
+    private Image gold7=Util.loadImage("res/Untitled-137.png");
+    private Image gold8=Util.loadImage("res/Untitled-138.png");
+    private Image gold9=Util.loadImage("res/Untitled-139.png");
+
 
 
     private Background bg1;  // scroll cloud
@@ -68,9 +81,66 @@ public class LevelScene implements GameScene {
 
 
     }
+    private Image imagegold(int i){
+        switch (i){
+            case 0:
+                return gold0;
+
+            case 1:
+                return gold1;
+
+            case 2:
+                return gold2;
+
+            case 3:
+                return gold3;
+
+            case 4:
+                return gold4;
+
+            case 5:
+                return gold5;
+
+            case 6:
+                return gold6;
+
+            case 7:
+                return gold7;
+            case 8:
+                return gold8;
+            case 9:
+                return gold0;
+
+        }
+        return null;
+    }
+
+    public void dawGold(Graphics g){
+        int gold = playerController.gold;
+        System.out.println(gold%10);
+        ///Chỗ này sửa lại đoạn gold chia
+        for (int i = 0; i < 10; i++) {
+            if (gold%1==i){
+
+                g.drawImage(imagegold(i),50+200+20+20+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            }
+            if (gold%10==i){
+                g.drawImage(imagegold(i),50+200+20+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            }
+            if (gold%100==i){
+                g.drawImage(imagegold(i),50+200+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            }
+            if (gold%1000==i){
+                g.drawImage(imagegold(i),50+200,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            }
+
+        }
+        g.drawImage(goldCount,50,50,goldCount.getWidth(null)*4,goldCount.getHeight(null)*4,null);
+    }
+
     public void addEnemyFly(){
         quantityEnemyFly++;
-        if (quantityEnemyFly==4){
+        if (quantityEnemyFly==8){
             for (int i = 0; i < 1 ; i++) {
                 imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_1.png"));
                 imagesEnemyFly.add(Util.loadImage("res/enemy-fly04_2.png"));
@@ -98,6 +168,7 @@ public class LevelScene implements GameScene {
 
     }
     public void addEnemyBoss(){
+        playerController.getGameRect().setX(900);
         imageboss.add(Util.loadImage("res/enemyBoss01_1.png"));
         imageboss.add(Util.loadImage("res/enemyBoss01_2.png"));
         imageboss.add(Util.loadImage("res/enemyBoss01_3.png"));
@@ -157,7 +228,7 @@ public class LevelScene implements GameScene {
     @Override
     public void update() {
 
-        iconHpPlayerController.getGameRect().setWidth(PlayerController.hp);
+        iconHpPlayerController.getGameRect().setWidth(playerController.getGameRect().getHP());
 
         iconLeverController.getGameRect().setWidth(timeSeconds);
         if (timeSeconds>208*2){
@@ -173,19 +244,12 @@ public class LevelScene implements GameScene {
         bg1.update();
         bg2.update();
         bg3.update();
-        if (PlayerController.hp<2){
+        if (playerController.getGameRect().isDead()){
             gameover=true;
         }else {
             playerController.processInput(InputManager.istance.isUpPressed(), InputManager.istance.isDownPressed(), InputManager.istance.isLeftPressed(), InputManager.istance.isRightPressed());
             ControllerManager.instance.update();
         }
-
-
-
-
-
-
-
 
 
         CollisionManager.instance.update();
@@ -204,7 +268,7 @@ public class LevelScene implements GameScene {
 
 
         }
-        if (timeSeconds>100*2&&timeSeconds<206*2){
+        if (timeSeconds>50*2&&timeSeconds<206*2){
             if (time==30){
                 iconEnemyFlyController.getGameRect().setWidth(64);
                 addEnemyFly();
@@ -249,6 +313,8 @@ public class LevelScene implements GameScene {
         iconEnemyFlyController.draw(g);
         iconEnemyController.draw(g);
         iconBossController.draw(g);
+        dawGold(g);
+
 
 
     }

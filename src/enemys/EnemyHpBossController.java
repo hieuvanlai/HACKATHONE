@@ -30,6 +30,11 @@ public class EnemyHpBossController extends Controller implements Collider {
                 other.getGameRect().getHit(2);
             }else {
                 LevelScene.enemyBossController.getGameRect().getHit(5);
+                if (LevelScene.enemyBossController.getGameRect().isDead()){
+                    CollisionManager.instance.remove(LevelScene.enemyBossController);
+                    CollisionManager.instance.remove(this);
+
+                }
 
 
             }

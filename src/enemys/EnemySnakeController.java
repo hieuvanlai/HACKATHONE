@@ -121,7 +121,7 @@ public class EnemySnakeController extends Controller implements Collider {
     @Override
     public void onCollider(Collider other) {
         //sau khi hết hiệu ứng thì mới cho xét va chạm
-        if (timemove>100){
+        if (timemove>200){
             if(other instanceof PlayerController){
                 dameLimit++;
                 //cắn máu phát đầu tiên

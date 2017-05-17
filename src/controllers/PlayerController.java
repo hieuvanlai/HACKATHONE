@@ -24,7 +24,7 @@ public class PlayerController extends Controller implements Collider {
     private boolean isMoveRight = true;
     private int gravity = 3; //  trọng lượng
     public static int  x;
-    public static int hp=200;
+    public int gold=0;
 
 
 
@@ -75,14 +75,12 @@ public class PlayerController extends Controller implements Collider {
     public void update() {
         if (getGameRect().getHP()<2){
             imageRender.setImage(Util.loadImage("res/player_dead.png"));
-
-
         }
 
 
 
         this.x =  gameRect.getX();
-        this.hp= gameRect.getHP();
+
         timeCount++;
         this.gameRect.move(dx, dy);
         this.check();
@@ -113,9 +111,10 @@ public class PlayerController extends Controller implements Collider {
     @Override
     public void onCollider(Collider other) {
         if (other instanceof Gold){
+            Util.playSound("res/gietenemy.wav",false);
+            gold++;
             ((Gold) other).gameRect.setDead(true);
             CollisionManager.instance.remove(other);
         }
-
     }
 }
