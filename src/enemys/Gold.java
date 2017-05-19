@@ -6,41 +6,73 @@ import controllers.Controller;
 import levels.Level1;
 import models.GameRect;
 import utils.Util;
+import views.Animation;
 import views.ImageRender;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by hieuv on 5/17/2017.
  */
 public class Gold extends Controller implements Collider {
     private boolean leftrRight;
-    public Gold(GameRect gameRect, ImageRender imageRender) {
+    Animation animation;
+    ArrayList<Image> images = new ArrayList<>();
 
-        super(gameRect, imageRender);
+
+    public Gold(GameRect gameRect) {
+
+        super(gameRect,null);
         CollisionManager.instance.add(this);
         leftrRight = Util.random.nextBoolean();
+        images.add(Util.loadImage("res/coin01.png"));
+        images.add(Util.loadImage("res/coin02.png"));
+        images.add(Util.loadImage("res/coin03.png"));
+        images.add(Util.loadImage("res/coin04.png"));
+        images.add(Util.loadImage("res/coin05.png"));
+        animation = new Animation(images,10);
     }
     @Override
     public void update(){
+
         timemove++;
         if (leftrRight){
             if (timemove>0&&timemove<40){
+                if (gameRect.getX()==0){
+                    leftrRight=false;
+                    return;
+                }
                 gameRect.move(-1,-4);
             }
             if (timemove>40){
                 if (gameRect.getY()< 390+10){
                     gameRect.move(-1,+6);
+                }else {
+                    animation.setImageIndex(0);
                 }
             }
         }else {
+            if (gameRect.getX()==960){
+                leftrRight=true;
+                return;
+            }
             if (timemove>0&&timemove<40){
                 gameRect.move(1,-4);
             }
             if (timemove>40){
-                if (gameRect.getY()< 390+10){
+                if (gameRect.getY()< 390+10+10){
                     gameRect.move(1,6);
+                }else {
+                    animation.setImageIndex(0);
                 }
             }
         }
+        if (timemove>300){
+            gameRect.setDead(true);
+            CollisionManager.instance.remove(this);
+        }
+
 
 
 
@@ -48,6 +80,11 @@ public class Gold extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
+
+    }
+    @Override
+    public void draw(Graphics g){
+                animation.draw(g,gameRect);
 
     }
 }

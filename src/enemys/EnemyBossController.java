@@ -45,11 +45,7 @@ public class EnemyBossController extends Controller implements Collider {
         imageTornado.add(images.get(8));
         imageTornado.add(images.get(9));
 
-        imageShot.add(images.get(0));
-        imageShot.add(images.get(1));
-        imageShot.add(images.get(2));
-        imageShot.add(images.get(3));
-        imageShot.add(images.get(4));
+
         imageShot.add(images.get(5));
         imageShot.add(images.get(6));
         imageShot.add(images.get(7));
@@ -73,8 +69,6 @@ public class EnemyBossController extends Controller implements Collider {
 
     @Override
     public void update() {
-
-        this.hp = gameRect.getHP();
         timeShot++;
         dy += gravity;
         this.gameRect.move(0, dy);
@@ -87,22 +81,22 @@ public class EnemyBossController extends Controller implements Collider {
         if (timeShot>0&&timeShot<300){
             animation.setImageIndex(0);
         }//
-
-        if (timeShot>301&&timeShot<700){
+        if (timeShot==100){{
+            Util.playSound("res/rongfulllua.wav",false);
+        }}
+        if (timeShot>301+200&&timeShot<700){
             animation.setImages(imageShot);
             doShoot();
-
-
         }
-        if (timeShot>701&&timeShot<1000){
+        if (timeShot>701+200&&timeShot<1000+200){
             animation.setImageIndex(0);
         }
-        if (timeShot>1001&&timeShot<1300){
+        if (timeShot>1001+200&&timeShot<1300+200){
+
             animation.setImages(imageTornado);
                 doShootTornado();
-
         }
-        if (timeShot>1301){
+        if (timeShot>1301+200){
             timeShot=0;
         }
 
@@ -120,7 +114,7 @@ public class EnemyBossController extends Controller implements Collider {
     private void doShoot(){
         timeCounter--;
         if (timeCounter <= 0){
-            Util.playSound("res/rongthoilua.wav",false);
+
             EnemyBulletController enemyBulletController = new EnemyBulletController(
                     this.gameRect.getX()+ this.gameRect.getWidth(),
                     this.gameRect.getY()+30,
@@ -132,11 +126,13 @@ public class EnemyBossController extends Controller implements Collider {
         }
     }
     private void doShootTornado(){
+
         timeTornado--;
         if (timeTornado <= 0){
-            Util.playSound("res/rongthoiloc.wav",false);
+
             EnemyBulletTornadoController enemyBulletTornadoController = new EnemyBulletTornadoController(this.gameRect.getX()+ this.gameRect.getWidth(),this.gameRect.getY()+100, Util.loadImage("res/enemyBoss01-Skill02_1.png"));
             ControllerManager.instance.add(enemyBulletTornadoController);
+            Util.playSound("res/wind1.wav",false);
 
             timeTornado = 100;
         }

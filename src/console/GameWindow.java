@@ -3,6 +3,7 @@ package console;
 import controllers.ControllerManager;
 import scenes.GameScene;
 import scenes.LevelScene;
+import scenes.MenuScene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,9 +24,9 @@ public class GameWindow extends Frame{
 
     public GameWindow(){
         instance = this;
-        currentScene = new LevelScene();
-
+        currentScene = new MenuScene();
         setTitle("Drancia Project by CamBuoiTaoTeam");
+
         setVisible(true);
         setSize(960,640+52+10+10+10-2);
 

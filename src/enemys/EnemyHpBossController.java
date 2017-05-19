@@ -28,9 +28,13 @@ public class EnemyHpBossController extends Controller implements Collider {
             other.getGameRect().move(50,0);
             if (dame){
                 other.getGameRect().getHit(2);
+                Util.playSound("res/enemycanPlay.wav",false);
             }else {
                 LevelScene.enemyBossController.getGameRect().getHit(5);
                 if (LevelScene.enemyBossController.getGameRect().isDead()){
+                    Util.playSound("res/dieenemy.wav",false);
+                    CollisionManager.instance.remove(LevelScene.enemyBossController.enemyHpBossControllerDame);
+                    CollisionManager.instance.remove(LevelScene.enemyBossController.enemyHpBossControllerHit);
                     CollisionManager.instance.remove(LevelScene.enemyBossController);
                     CollisionManager.instance.remove(this);
 

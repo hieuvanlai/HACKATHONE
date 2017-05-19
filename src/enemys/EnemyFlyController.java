@@ -144,7 +144,7 @@ public class EnemyFlyController extends Controller implements Collider {
                 other.getGameRect().getHit(dame);
 
                 dameLimitLater=dameLimit;
-                Util.playSound("res/enemycan.wav",false);
+                Util.playSound("res/enemycanPlay.wav",false);
             }
             //nếu va chạm liên tục thì giới hạn lại
             if (dameLimit==dameLimitLater){
@@ -153,7 +153,7 @@ public class EnemyFlyController extends Controller implements Collider {
 
                 damecount++;
                 if (damecount==20){
-                    Util.playSound("res/enemycan.wav",false);
+                    Util.playSound("res/enemycanPlay.wav",false);
                     other.getGameRect().getHit(dame);
                     damecount=0;
                 }

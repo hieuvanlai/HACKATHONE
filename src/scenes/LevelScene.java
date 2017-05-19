@@ -109,7 +109,7 @@ public class LevelScene implements GameScene {
             case 8:
                 return gold8;
             case 9:
-                return gold0;
+                return gold9;
 
         }
         return null;
@@ -117,21 +117,19 @@ public class LevelScene implements GameScene {
 
     public void dawGold(Graphics g){
         int gold = playerController.gold;
-        System.out.println(gold%10);
-        ///Chỗ này sửa lại đoạn gold chia
-        for (int i = 0; i < 10; i++) {
-            if (gold%1==i){
 
-                g.drawImage(imagegold(i),50+200+20+20+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
-            }
+        for (int i = 0; i < 10; i++) {
             if (gold%10==i){
-                g.drawImage(imagegold(i),50+200+20+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+                g.drawImage(imagegold(i),50+200+20+20+20+30-10,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
             }
-            if (gold%100==i){
-                g.drawImage(imagegold(i),50+200+20+30,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            if (gold/10%10==i){
+                g.drawImage(imagegold(i),50+200+20+25,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
             }
-            if (gold%1000==i){
-                g.drawImage(imagegold(i),50+200,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            if (gold/100%10==i){
+                g.drawImage(imagegold(i),50+200+20-5-5,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
+            }
+            if (gold/1000%10==i){
+                g.drawImage(imagegold(i),50+170+5,50,imagegold(i).getWidth(null)*4,imagegold(i).getHeight(null)*4,null);
             }
 
         }
@@ -231,10 +229,11 @@ public class LevelScene implements GameScene {
         iconHpPlayerController.getGameRect().setWidth(playerController.getGameRect().getHP());
 
         iconLeverController.getGameRect().setWidth(timeSeconds);
-        if (timeSeconds>208*2){
-            iconLeverController.getGameRect().setWidth(208*2);
+        if (timeSeconds>150*2){
+            iconLeverController.getGameRect().setWidth(150*2);
         }else {
-            iconLeverController.getGameRect().setWidth(timeSeconds/2);
+            float ti = (float) timeSeconds/150;
+            iconLeverController.getGameRect().setWidth((int) (ti*208)/2);
 
         }
 
@@ -260,7 +259,7 @@ public class LevelScene implements GameScene {
             timeSeconds++;
             time=0;
         }
-        if (timeSeconds>0&&timeSeconds<206*2){
+        if (timeSeconds>0&&timeSeconds<148*2){
 
             if (time==1){
                 addEnemy();
@@ -268,28 +267,32 @@ public class LevelScene implements GameScene {
 
 
         }
-        if (timeSeconds>50*2&&timeSeconds<206*2){
+        if (timeSeconds>50*2&&timeSeconds<148*2){
             if (time==30){
                 iconEnemyFlyController.getGameRect().setWidth(64);
                 addEnemyFly();
             }
 
         }
-        if (timeSeconds>150*2&&timeSeconds<206*2){
+        if (timeSeconds>100*2&&timeSeconds<148*2){
             if (time==59){
                 iconEnemySnakeController.getGameRect().setWidth(64);
                 addEnemySnake();
             }
 
         }
-        if (timeSeconds==208*2){
-            iconHpBossController.getGameRect().setWidth(160);
-            iconHpBossController.getGameRect().setWidth(168);
-            if (time==2){
+        if (timeSeconds==150*2){
 
+            if (time==2){
                 addEnemyBoss();
             }
 
+
+
+        }
+        if (enemyBossController!=null){
+            iconHpBossController.getGameRect().setWidth(enemyBossController.getGameRect().getHP());
+            iconBossController.getGameRect().setWidth(155);
         }
 
 

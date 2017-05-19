@@ -47,11 +47,13 @@ public class PlayerController extends Controller implements Collider {
             if (!isJumped) {
                 this.dy = -5;
                 this.isJumped = true;
+
             }
         }
         if (isDownPressed) {
             if (isJumped) {
                 this.dy = 10;
+
             }
         }
         if (isLeftPressed) {
@@ -74,7 +76,11 @@ public class PlayerController extends Controller implements Collider {
 
     public void update() {
         if (getGameRect().getHP()<2){
-            imageRender.setImage(Util.loadImage("res/player_dead.png"));
+            System.out.println(gameRect.getHP());
+            this.getGameRect().setDead(true);
+            playerWeaponController.getGameRect().setDead(true);
+            CollisionManager.instance.remove(this);
+
         }
 
 
@@ -89,6 +95,7 @@ public class PlayerController extends Controller implements Collider {
 
     private void check() {
         if (this.getGameRect().getY() >= Level1.GROUND - this.gameRect.getHeight()) {//khi player chạm đất
+
             this.getGameRect().setY(Level1.GROUND - this.gameRect.getHeight());
             this.isJumped = false;
         }

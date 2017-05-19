@@ -23,7 +23,7 @@ public class EnemySnakeController extends Controller implements Collider {
 
 
     public   int timemove=0;
-    MoveBeHavior moveBeHavior = new MoveBeHavior();
+
     public EnemySnakeController(int x,ArrayList<Image> images){
 
         AnimationSnakeControler explosionController = new AnimationSnakeControler(new GameRect(x,426,0,0));
@@ -74,7 +74,7 @@ public class EnemySnakeController extends Controller implements Collider {
                     xenlenystart=481;
                     timemove=101;
                 }else {
-                    moveBeHavior.moveleft(gameRect);
+                    gameRect.move(-3,0);
 
                     animation.setImages(imagesFlip);
                 }
@@ -87,7 +87,7 @@ public class EnemySnakeController extends Controller implements Collider {
                     timemove=101;
                 }
                 else {
-                    moveBeHavior.moveright(gameRect);
+                    gameRect.move(3,0);
                     animation.setImages(imagestart);
                 }
 
@@ -129,20 +129,20 @@ public class EnemySnakeController extends Controller implements Collider {
                     other.getGameRect().getHit(dame);
 
                     dameLimitLater=dameLimit;
-                    Util.playSound("res/enemycan.wav",false);
+                    Util.playSound("res/enemycanPlay.wav",false);
                 }
                 //nếu va chạm liên tục thì giới hạn lại
                 if (dameLimit==dameLimitLater){
 
                     if (gameRect.getX()>=960-40){
-                        gameRect.move(-1,0);
+                        gameRect.move(-3,0);
                     }
                     if (xenlenystart>xplanestart){
-                        gameRect.move(1,0);
+                        gameRect.move(3,0);
                     }
                     damecount++;
                     if (damecount==20){
-                        Util.playSound("res/enemycan.wav",false);
+                        Util.playSound("res/enemycanPlay.wav",false);
                         other.getGameRect().getHit(dame);
                         damecount=0;
                     }

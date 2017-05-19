@@ -63,7 +63,7 @@ public class EnemyBulletTornadoController extends Controller implements Collider
     public void onCollider(Collider other) {
         if (other instanceof PlayerController) {
             other.getGameRect().getHit(10);
-            Util.playSound("res/enemycan.wav",false);
+            Util.playSound("res/enemycanPlay.wav",false);
             this.gameRect.setDead(true);
             CollisionManager.instance.remove(this);
 

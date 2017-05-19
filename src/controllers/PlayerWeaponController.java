@@ -41,7 +41,7 @@ public class PlayerWeaponController extends Controller implements Collider{
     }
     public void addGold(Collider other){
         GameRect gameRectg = new GameRect(other.getGameRect().getX(),other.getGameRect().getY(),10,10);
-        Gold gold = new Gold(gameRectg,new ImageRender(Util.loadImage("res/coin01.png")));
+        Gold gold = new Gold(gameRectg);
         ControllerManager.instance.add(gold);
     }
 
@@ -51,7 +51,7 @@ public class PlayerWeaponController extends Controller implements Collider{
             addGold(other);
 
             ((EnemyController) other).gameRect.setDead(true);
-            Util.playSound("res/gietenemy.wav",false);
+            Util.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
 
             }
@@ -60,7 +60,7 @@ public class PlayerWeaponController extends Controller implements Collider{
         {
             addGold(other);
             ((EnemySnakeController) other).gameRect.setDead(true);
-            Util.playSound("res/gietenemy.wav",false);
+            Util.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
         if(other instanceof EnemyFlyController)
@@ -68,8 +68,7 @@ public class PlayerWeaponController extends Controller implements Collider{
         {
             addGold(other);
             ((EnemyFlyController) other).gameRect.setDead(true);
-            Util.playSound("res/gietenemy.wav",false);
-
+            Util.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
 

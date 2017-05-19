@@ -57,6 +57,9 @@ public class Animation {
         this.images = images;
         this.isOneTime= false;
     }
+    public boolean isEnded() {
+        return hasEnded;
+    }
     public void draw(Graphics graphics, GameRect gameRect){
         time++;
         if (time>=interval){
@@ -74,6 +77,26 @@ public class Animation {
 
 //        graphics.drawImage(images.get(imageIndex),gameRect.getX(),gameRect.getY(),null);
         graphics.drawImage(images.get(imageIndex), gameRect.getX(), gameRect.getY(), images.get(imageIndex).getWidth(null)*4, images.get(imageIndex).getHeight(null)*4, null);
+
+
+    }
+    public void drawbutton(Graphics graphics, GameRect gameRect){
+        time++;
+        if (time>=interval){
+            time=0;
+            imageIndex++;
+            if (imageIndex>=images.size()){
+                if (isOneTime){
+                    hasEnded=true;
+                }
+                imageIndex=0;
+            }
+
+        }
+
+
+//        graphics.drawImage(images.get(imageIndex),gameRect.getX(),gameRect.getY(),null);
+        graphics.drawImage(images.get(imageIndex), gameRect.getX(), gameRect.getY(), images.get(imageIndex).getWidth(null), images.get(imageIndex).getHeight(null), null);
 
 
     }
