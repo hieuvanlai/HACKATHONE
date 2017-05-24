@@ -1,6 +1,6 @@
 package controllers;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -15,8 +15,8 @@ public class StartButtonController extends Controller {
     public StartButtonController(int x, int y, Image image) {
         super(new GameRect(x,y,120/4,50/4),new ImageRender(image));
         images = new ArrayList<>();
-        images.add(Util.loadImage("res/start-button.png"));
-        images.add(Util.loadImage("res/blurred-start-button.png"));
+        images.add(Utils.loadImage("res/start-button.png"));
+        images.add(Utils.loadImage("res/blurred-start-button.png"));
         animation = new Animation(images,20,false);
     }
 

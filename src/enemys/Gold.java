@@ -3,11 +3,9 @@ package enemys;
 import controllers.Collider;
 import controllers.CollisionManager;
 import controllers.Controller;
-import levels.Level1;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
-import views.ImageRender;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,12 +23,12 @@ public class Gold extends Controller implements Collider {
 
         super(gameRect,null);
         CollisionManager.instance.add(this);
-        leftrRight = Util.random.nextBoolean();
-        images.add(Util.loadImage("res/coin01.png"));
-        images.add(Util.loadImage("res/coin02.png"));
-        images.add(Util.loadImage("res/coin03.png"));
-        images.add(Util.loadImage("res/coin04.png"));
-        images.add(Util.loadImage("res/coin05.png"));
+        leftrRight = Utils.random.nextBoolean();
+        images.add(Utils.loadImage("res/coin01.png"));
+        images.add(Utils.loadImage("res/coin02.png"));
+        images.add(Utils.loadImage("res/coin03.png"));
+        images.add(Utils.loadImage("res/coin04.png"));
+        images.add(Utils.loadImage("res/coin05.png"));
         animation = new Animation(images,10);
     }
     @Override

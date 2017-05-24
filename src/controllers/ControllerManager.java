@@ -18,6 +18,10 @@ public class ControllerManager {
     public void add(Controller controller) {
         controllers.add(controller);
     }
+    public void Clean(){
+        controllers.clear();
+        CollisionManager.instance.Clear();
+    }
 
     public void update() {
         for (int i = 0; i < controllers.size(); i++) {
@@ -29,9 +33,7 @@ public class ControllerManager {
             controllers.get(i).update();
         }
     }
-
     public void draw(Graphics g) {
-
         boolean x=true;
         while (x){
             try {
@@ -43,10 +45,6 @@ public class ControllerManager {
                 x=true;
 
             }
-
         }
-
-
-
     }
 }

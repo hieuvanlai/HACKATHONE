@@ -19,6 +19,9 @@ public class GameWindow extends Frame{
     private BufferedImage bufferedImage;
     private Graphics backBufferGraphic;
 
+    public static final int SCREEN_WIDTH = 960;
+    public static final int SCREEN_HEIGHT = 740;
+
     private GameScene currentScene;
     public static GameWindow instance;
 
@@ -98,11 +101,9 @@ public class GameWindow extends Frame{
                         e.printStackTrace();
                     }
                     currentScene.update();
-                    if (LevelScene.gameover){
 
-                    }else {
                         ControllerManager.instance.update();
-                    }
+
 
 
 

@@ -2,7 +2,7 @@ package enemys;
 
 import controllers.*;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -20,13 +20,20 @@ public class EnemySnakeController extends Controller implements Collider {
     private int dameLimit=0;
     private int dameLimitLater=0;
     private int damecount=0;
+    AnimationWitchController explosionController;
+    ArrayList<Image> imageAppeat= new ArrayList<>();
+//
 
 
     public   int timemove=0;
 
     public EnemySnakeController(int x,ArrayList<Image> images){
 
-        AnimationSnakeControler explosionController = new AnimationSnakeControler(new GameRect(x,426,0,0));
+        imageAppeat.add(Utils.loadImage("res/animation-snake3.png"));
+        imageAppeat.add(Utils.loadImage("res/animation-snake1.png"));
+        imageAppeat.add(Utils.loadImage("res/animation-snake2.png"));
+
+        explosionController = new AnimationWitchController(new GameRect(x,426,0,0),imageAppeat,80);
         ControllerManager.instance.add(explosionController);
 
 
@@ -35,7 +42,7 @@ public class EnemySnakeController extends Controller implements Collider {
         animation = new Animation(images,70);
         imagestart = images;
         for (Image image:images){
-            imagesFlip.add(Util.FlipImage(image));
+            imagesFlip.add(Utils.FlipImage(image));
         }
         CollisionManager.instance.add(this);
 
@@ -129,7 +136,7 @@ public class EnemySnakeController extends Controller implements Collider {
                     other.getGameRect().getHit(dame);
 
                     dameLimitLater=dameLimit;
-                    Util.playSound("res/enemycanPlay.wav",false);
+                    Utils.playSound("res/enemycanPlay.wav",false);
                 }
                 //nếu va chạm liên tục thì giới hạn lại
                 if (dameLimit==dameLimitLater){
@@ -142,7 +149,7 @@ public class EnemySnakeController extends Controller implements Collider {
                     }
                     damecount++;
                     if (damecount==20){
-                        Util.playSound("res/enemycanPlay.wav",false);
+                        Utils.playSound("res/enemycanPlay.wav",false);
                         other.getGameRect().getHit(dame);
                         damecount=0;
                     }

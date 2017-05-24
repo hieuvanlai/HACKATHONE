@@ -5,7 +5,7 @@ import controllers.CollisionManager;
 import controllers.Controller;
 import controllers.PlayerController;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -32,7 +32,7 @@ public class EnemyController extends Controller implements Collider {
         animation = new Animation(images,70);
         this.imagestart = images;
         for (Image image:images){
-            imagesFlip.add(Util.FlipImage(image));
+            imagesFlip.add(Utils.FlipImage(image));
         }
         CollisionManager.instance.add(this);
 
@@ -86,7 +86,7 @@ public class EnemyController extends Controller implements Collider {
         timemove++;
 
         if (timemove==1){
-            moveleftright = Util.random.nextBoolean();
+            moveleftright = Utils.random.nextBoolean();
         }
 
             //enemy đi lên
@@ -128,7 +128,7 @@ public class EnemyController extends Controller implements Collider {
                     other.getGameRect().getHit(dame);
 
                     dameLimitLater=dameLimit;
-                    Util.playSound("res/enemycanPlay.wav",false);
+                    Utils.playSound("res/enemycanPlay.wav",false);
                 }
                 //nếu va chạm liên tục thì giới hạn lại
                 if (dameLimit==dameLimitLater){
@@ -139,7 +139,7 @@ public class EnemyController extends Controller implements Collider {
                     }
                     damecount++;
                     if (damecount==20){
-                        Util.playSound("res/enemycanPlay.wav",false);
+                        Utils.playSound("res/enemycanPlay.wav",false);
                         other.getGameRect().getHit(dame);
                         damecount=0;
                     }

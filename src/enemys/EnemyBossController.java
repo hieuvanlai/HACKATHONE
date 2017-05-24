@@ -7,7 +7,7 @@ import controllers.Controller;
 import controllers.ControllerManager;
 import levels.Level1;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -53,14 +53,14 @@ public class EnemyBossController extends Controller implements Collider {
 
 
         for (Image image:images){
-            imagesFlip.add(Util.FlipImage(image));
+            imagesFlip.add(Utils.FlipImage(image));
         }
-        Util.playSound("res/rongxuathien.wav",false);
+        Utils.playSound("res/rongxuathien.wav",false);
         CollisionManager.instance.add(this);
 
-        enemyHpBossControllerHit = new EnemyHpBossController(new GameRect(190,275,10,10));
+        enemyHpBossControllerHit = new EnemyHpBossController(new GameRect(190,275,10,10),true);
 
-        enemyHpBossControllerDame = new EnemyHpBossController(new GameRect(190,275+30+60+60-20-10,10,10));
+        enemyHpBossControllerDame = new EnemyHpBossController(new GameRect(190,275+30+60+60-20-10,10,10),true);
         enemyHpBossControllerDame.dame=true;
 
 
@@ -82,7 +82,7 @@ public class EnemyBossController extends Controller implements Collider {
             animation.setImageIndex(0);
         }//
         if (timeShot==100){{
-            Util.playSound("res/rongfulllua.wav",false);
+            Utils.playSound("res/rongfulllua.wav",false);
         }}
         if (timeShot>301+200&&timeShot<700){
             animation.setImages(imageShot);
@@ -118,7 +118,7 @@ public class EnemyBossController extends Controller implements Collider {
             EnemyBulletController enemyBulletController = new EnemyBulletController(
                     this.gameRect.getX()+ this.gameRect.getWidth(),
                     this.gameRect.getY()+30,
-                    Util.loadImage("res/enemyBoss01-Skill01_1.png"));
+                    Utils.loadImage("res/enemyBoss01-Skill01_1.png"));
 
             ControllerManager.instance.add(enemyBulletController);
             enemyBulletController.setShoot(true);
@@ -130,9 +130,9 @@ public class EnemyBossController extends Controller implements Collider {
         timeTornado--;
         if (timeTornado <= 0){
 
-            EnemyBulletTornadoController enemyBulletTornadoController = new EnemyBulletTornadoController(this.gameRect.getX()+ this.gameRect.getWidth(),this.gameRect.getY()+100, Util.loadImage("res/enemyBoss01-Skill02_1.png"));
+            EnemyBulletTornadoController enemyBulletTornadoController = new EnemyBulletTornadoController(this.gameRect.getX()+ this.gameRect.getWidth(),this.gameRect.getY()+100, Utils.loadImage("res/enemyBoss01-Skill02_1.png"));
             ControllerManager.instance.add(enemyBulletTornadoController);
-            Util.playSound("res/wind1.wav",false);
+            Utils.playSound("res/wind1.wav",false);
 
             timeTornado = 100;
         }

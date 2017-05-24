@@ -5,7 +5,7 @@ import controllers.CollisionManager;
 import controllers.Controller;
 import controllers.PlayerController;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.ImageRender;
 
 import java.awt.*;
@@ -64,7 +64,7 @@ public class EnemyBulletController extends Controller implements Collider {
     @Override
     public void onCollider(Collider other) {
         if (other instanceof PlayerController) {
-            Util.playSound("res/enemycanPlay.wav",false);
+            Utils.playSound("res/enemycanPlay.wav",false);
             other.getGameRect().getHit(2);
             this.gameRect.setDead(true);
             CollisionManager.instance.remove(this);

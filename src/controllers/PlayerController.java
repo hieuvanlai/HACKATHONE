@@ -1,14 +1,14 @@
 package controllers;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+import console.GameWindow;
 import enemys.*;
 import levels.Level1;
 import models.GameRect;
-import utils.Util;
+import scenes.GameOverScene;
+import utils.Utils;
 import views.ImageRender;
 
 import java.awt.*;
-import  controllers.CollisionManager;
 
 /**
  * Created by ADMIN on 5/8/2017.
@@ -23,9 +23,9 @@ public class PlayerController extends Controller implements Collider {
     private boolean isMoveLeft = false; // weapon di chuyển theo hướng player
     private boolean isMoveRight = true;
     private int gravity = 3; //  trọng lượng
-    public static int  x;
-    public int gold=0;
-
+    public static int x;
+    public static int y;
+    public int gold = 0;
 
 
     private PlayerWeaponController playerWeaponController;
@@ -34,7 +34,7 @@ public class PlayerController extends Controller implements Collider {
         this.gameRect = new GameRect(x, y, image.getWidth(null), image.getHeight(null));
         this.imageRender = new ImageRender(image);
         this.gameRect.setHP(160);
-        playerWeaponController = new PlayerWeaponController(x + 68, y + 36, 45, 25, Util.loadImage("res/weapon01_1.png"));
+        playerWeaponController = new PlayerWeaponController(x + 68, y + 36, 45, 25, Utils.loadImage("res/weapon01_1.png"));
 
         // ControllerManager.instance.add(playerWeaponController);
         CollisionManager.instance.add(this);
@@ -62,7 +62,7 @@ public class PlayerController extends Controller implements Collider {
                 isMoveLeft = true;
                 isMoveRight = false;
             } else this.dx = 0;
-            this.imageRender.setImage(Util.FlipImage(this.imageRender.getImageStart()));
+            this.imageRender.setImage(Utils.FlipImage(this.imageRender.getImageStart()));
         }
         if (isRightPressed) {
             if (this.gameRect.getX() + speed < 890) {
@@ -75,17 +75,14 @@ public class PlayerController extends Controller implements Collider {
     }
 
     public void update() {
-        if (getGameRect().getHP()<2){
-            System.out.println(gameRect.getHP());
+        if (getGameRect().getHP() < 2) {
             this.getGameRect().setDead(true);
             playerWeaponController.getGameRect().setDead(true);
             CollisionManager.instance.remove(this);
-
         }
 
-
-
-        this.x =  gameRect.getX();
+        this.x = gameRect.getX();
+        this.y = getGameRect().getY();
 
         timeCount++;
         this.gameRect.move(dx, dy);
@@ -117,8 +114,8 @@ public class PlayerController extends Controller implements Collider {
 
     @Override
     public void onCollider(Collider other) {
-        if (other instanceof Gold){
-            Util.playSound("res/gietenemy.wav",false);
+        if (other instanceof Gold) {
+            Utils.playSound("res/gietenemy.wav", false);
             gold++;
             ((Gold) other).gameRect.setDead(true);
             CollisionManager.instance.remove(other);

@@ -3,35 +3,38 @@ package scenes;
 import console.GameWindow;
 import controllers.QuitButtonController;
 import controllers.StartButtonController;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-/**
- * Created by ADMIN on 5/8/2017.
- */
+
 public class MenuScene implements GameScene {
     Animation animation;
     ArrayList<Image> images;
-    StartButtonController startButton = new StartButtonController(200+200+20,300,
-            Util.loadImage("res/start-button.png"));
-    QuitButtonController quitButton = new QuitButtonController(200+200+20,400,
-            Util.loadImage("res/quit-button.png"));
+    StartButtonController startButton = new StartButtonController(GameWindow.SCREEN_WIDTH/2-60,
+            GameWindow.SCREEN_HEIGHT/3+60,
+            Utils.loadImage("res/start-button.png"));
+    QuitButtonController quitButton = new QuitButtonController(GameWindow.SCREEN_WIDTH/2-65,
+            GameWindow.SCREEN_HEIGHT/2+30,
+            Utils.loadImage("res/quit-button.png"));
 
     int count = 0;
 
     public MenuScene() {
         startButton.setSelected(true);
         quitButton.setSelected(false);
+        Utils.playSound("res/menu-theme.wav",true);
     }
 
-    Image menuBackGround = Util.loadImage("res/menu-background.png");
-    Image warrior = Util.loadImage("res/warrior.png");
-    Image dragon = Util.loadImage("res/dragon.png");
-    Image credits = Util.loadImage("res/credits.png");
+    Image menuBackGround = Utils.loadImage("res/menu-background.png");
+    Image warrior = Utils.loadImage("res/warrior.png");
+    Image dragon = Utils.loadImage("res/dragon.png");
+    Image credits = Utils.loadImage("res/credits.png");
+
+
     @Override
     public void update() {
 
@@ -39,13 +42,12 @@ public class MenuScene implements GameScene {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(menuBackGround,0,0,960,700+20+20,null);
-        g.drawImage(dragon,960/13+70,140,200,350,null);
-        g.drawImage(warrior,960/2+130,140,190,360,null);
-        g.drawImage(credits,960/2-210,700+20+20-40,400,25,null);
+        g.drawImage(menuBackGround,0,0,GameWindow.SCREEN_WIDTH,GameWindow.SCREEN_HEIGHT,null);
+        g.drawImage(dragon,GameWindow.SCREEN_WIDTH/13+70,140,200,350,null);
+        g.drawImage(warrior,GameWindow.SCREEN_WIDTH/2+130,140,190,360,null);
+        g.drawImage(credits,GameWindow.SCREEN_WIDTH/2-200,GameWindow.SCREEN_HEIGHT-40,400,25,null);
         startButton.draw(g);
         quitButton.draw(g);
-
     }
 
     @Override

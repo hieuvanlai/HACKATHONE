@@ -1,11 +1,10 @@
 package controllers;
 
-import enemys.EnemyController;
-import enemys.EnemyFlyController;
-import enemys.EnemySnakeController;
-import enemys.Gold;
+import enemys.*;
 import models.GameRect;
-import utils.Util;
+import scenes.LevelScene;
+import scenes.LevelScene2;
+import utils.Utils;
 import views.ImageRender;
 
 import java.awt.*;
@@ -35,7 +34,7 @@ public class PlayerWeaponController extends Controller implements Collider{
         if (isLeft){
             this.gameRect.setX(x - this.gameRect.getWidth());
             this.gameRect.setY(y + 36);
-            this.imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
+            this.imageRender.setImage(Utils.FlipImage(imageRender.getImageStart()));
         }
 
     }
@@ -51,16 +50,45 @@ public class PlayerWeaponController extends Controller implements Collider{
             addGold(other);
 
             ((EnemyController) other).gameRect.setDead(true);
-            Util.playSound("res/dieenemy.wav",false);
+            Utils.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
 
+        }
+        if (other instanceof EnemyBoss02Controller) {
+
+            ((EnemyBoss02Controller) other).gameRect.getHit(1);
+            if (((EnemyBoss02Controller) other).gameRect.getX()+((EnemyBoss02Controller) other).gameRect.getWidth()<this.getGameRect().getX()+10){
+                LevelScene2.playerController.getGameRect().move(20,0);
+            }else {
+                LevelScene2.playerController.getGameRect().move(-20,0);
             }
+
+            Utils.playSound("res/dieenemy.wav",false);
+
+
+        }
         if(other instanceof EnemySnakeController)
 
         {
             addGold(other);
             ((EnemySnakeController) other).gameRect.setDead(true);
-            Util.playSound("res/dieenemy.wav",false);
+            Utils.playSound("res/dieenemy.wav",false);
+            CollisionManager.instance.remove(other);
+        }
+        if(other instanceof EnemyPokemonController)
+
+        {
+            addGold(other);
+            ((EnemyPokemonController) other).gameRect.setDead(true);
+            Utils.playSound("res/dieenemy.wav",false);
+            CollisionManager.instance.remove(other);
+        }
+        if(other instanceof EnemyWitchController)
+
+        {
+            addGold(other);
+            ((EnemyWitchController) other).gameRect.setDead(true);
+            Utils.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
         if(other instanceof EnemyFlyController)
@@ -68,11 +96,12 @@ public class PlayerWeaponController extends Controller implements Collider{
         {
             addGold(other);
             ((EnemyFlyController) other).gameRect.setDead(true);
-            Util.playSound("res/dieenemy.wav",false);
+            Utils.playSound("res/dieenemy.wav",false);
             CollisionManager.instance.remove(other);
         }
 
         }
+
 
     }
 

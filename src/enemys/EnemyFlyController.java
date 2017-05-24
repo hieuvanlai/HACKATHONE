@@ -5,7 +5,7 @@ import controllers.CollisionManager;
 import controllers.Controller;
 import controllers.PlayerController;
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -36,7 +36,7 @@ public class EnemyFlyController extends Controller implements Collider {
         this.imagestart = images;
         animation = new Animation(images,70);
         for (Image image:images){
-            imagesFlip.add(Util.FlipImage(image));
+            imagesFlip.add(Utils.FlipImage(image));
         }
         CollisionManager.instance.add(this);
 
@@ -87,7 +87,7 @@ public class EnemyFlyController extends Controller implements Collider {
     @Override
     public void update() {
         //nếu không va chạm nữa thì về 0
-        if (dameLimitLater>dameLimit){
+        if (dameLimitLater>dameLimit+4){
             dameLimitLater=0;
             dameLimit=0;
             damecount=0;
@@ -99,7 +99,7 @@ public class EnemyFlyController extends Controller implements Collider {
 
         timemove++;
         if (timemove==1){
-            moveleftright = Util.random.nextBoolean();
+            moveleftright = Utils.random.nextBoolean();
         }
 
 
@@ -110,7 +110,7 @@ public class EnemyFlyController extends Controller implements Collider {
         if (moveBeHavior.moveZ(timemove,gameRect, xEnemystart)){
             imageRender.setImage(imageRender.getImageStart());
         }else {
-            imageRender.setImage(Util.FlipImage(imageRender.getImageStart()));
+            imageRender.setImage(Utils.FlipImage(imageRender.getImageStart()));
         }
 
 //
@@ -138,22 +138,22 @@ public class EnemyFlyController extends Controller implements Collider {
     @Override
     public void onCollider(Collider other) {
         if (other instanceof PlayerController) {
+            System.out.println(dameLimit+" Và "+dameLimitLater);
             dameLimit++;
             //cắn máu phát đầu tiên
             if (dameLimit==1){
                 other.getGameRect().getHit(dame);
 
                 dameLimitLater=dameLimit;
-                Util.playSound("res/enemycanPlay.wav",false);
+                Utils.playSound("res/enemycanPlay.wav",false);
             }
             //nếu va chạm liên tục thì giới hạn lại
             if (dameLimit==dameLimitLater){
 
 
-
                 damecount++;
-                if (damecount==20){
-                    Util.playSound("res/enemycanPlay.wav",false);
+                if (damecount==40){
+                    Utils.playSound("res/enemycanPlay.wav",false);
                     other.getGameRect().getHit(dame);
                     damecount=0;
                 }

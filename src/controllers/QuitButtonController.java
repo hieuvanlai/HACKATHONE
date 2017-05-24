@@ -1,7 +1,7 @@
 package controllers;
 
 import models.GameRect;
-import utils.Util;
+import utils.Utils;
 import views.Animation;
 import views.ImageRender;
 
@@ -17,10 +17,10 @@ public class QuitButtonController extends Controller {
     private boolean selected;
 
     public QuitButtonController(int x, int y, Image image) {
-        super(new GameRect(x,y,image.getWidth(null)/4,image.getHeight(null)/4),new ImageRender(image));
+        super(new GameRect(x,y,image.getWidth(null)/4+1,image.getHeight(null)/4),new ImageRender(image));
         images = new ArrayList<>();
-        images.add(Util.loadImage("res/quit-button.png"));
-        images.add(Util.loadImage("res/blurred-quit-button.png"));
+        images.add(Utils.loadImage("res/quit-button.png"));
+        images.add(Utils.loadImage("res/blurred-quit-button.png"));
         animation = new Animation(images,20,false);
     }
 
